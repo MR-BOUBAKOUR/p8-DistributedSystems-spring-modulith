@@ -1,27 +1,23 @@
 package com.redha.tourguide_modulith.user.internal.model;
 
-import com.redha.tourguide_modulith.location.internal.model.Attraction;
-import com.redha.tourguide_modulith.location.internal.model.VisitedLocation;
+import com.redha.tourguide_modulith.location.dto.AttractionDto;
+import com.redha.tourguide_modulith.location.dto.VisitedLocationDto;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 public class UserReward {
 
-	public final VisitedLocation visitedLocation;
-	public final Attraction attraction;
+	public final VisitedLocationDto visitedLocation;
+	public final AttractionDto attraction;
 
 	@Getter @Setter
 	private int rewardPoints;
-	
-	public UserReward(VisitedLocation visitedLocation, Attraction attraction, int rewardPoints) {
+
+	public UserReward(VisitedLocationDto visitedLocation, AttractionDto attraction, int rewardPoints) {
 		this.visitedLocation = visitedLocation;
 		this.attraction = attraction;
 		this.rewardPoints = rewardPoints;
-	}
-	
-	public UserReward(VisitedLocation visitedLocation, Attraction attraction) {
-		this.visitedLocation = visitedLocation;
-		this.attraction = attraction;
 	}
 
 	@Override

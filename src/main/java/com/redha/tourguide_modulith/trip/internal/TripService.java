@@ -2,10 +2,10 @@ package com.redha.tourguide_modulith.trip.internal;
 
 import com.redha.tourguide_modulith.trip.TripApi;
 import com.redha.tourguide_modulith.user.UserApi;
-import com.redha.tourguide_modulith.user.internal.model.User;
-import com.redha.tourguide_modulith.user.internal.model.UserPreferences;
-import com.redha.tourguide_modulith.user.internal.model.UserReward;
-import com.redha.tourguide_modulith.user.internal.model.UserTripDeal;
+import com.redha.tourguide_modulith.user.dto.UserDto;
+import com.redha.tourguide_modulith.user.dto.UserPreferencesDto;
+import com.redha.tourguide_modulith.user.dto.UserRewardDto;
+import com.redha.tourguide_modulith.user.dto.UserTripDealDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -26,13 +26,13 @@ public class TripService implements TripApi {
 
     public List<Provider> getTripDeals(UUID userId) {
 
-        User user = userApi.getUser(userId);
+        UserDto user = userApi.getUser(userId);
 
         int cumulativeRewardPoints = user.getUserRewards().stream()
-                .mapToInt(UserReward::getRewardPoints)
+                .mapToInt(UserRewardDto::getRewardPoints)
                 .sum();
 
-        UserPreferences preferences = user.getUserPreferences();
+        UserPreferencesDto preferences = user.getUserPreferences();
 
         List<Provider> providers = tripPricerAdapter.getPrice(
                 user.getUserId(),
@@ -41,8 +41,8 @@ public class TripService implements TripApi {
                 preferences.getTripDuration(),
                 cumulativeRewardPoints);
 
-        List<UserTripDeal> userTripDeals = providers.stream()
-                .map(p -> new UserTripDeal(p.name(), p.price(), p.tripId()))
+        List<UserTripDealDto> userTripDeals = providers.stream()
+                .map(p -> new UserTripDealDto(p.name(), p.price(), p.tripId()))
                 .toList();
 
         user.setTripDeals(userTripDeals);

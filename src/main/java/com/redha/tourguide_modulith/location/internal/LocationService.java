@@ -5,8 +5,10 @@ import java.util.UUID;
 
 import com.redha.tourguide_modulith.location.LocationApi;
 import com.redha.tourguide_modulith.location.TrackSuccessEvent;
+import com.redha.tourguide_modulith.location.dto.AttractionDto;
+import com.redha.tourguide_modulith.location.dto.LocationDto;
+import com.redha.tourguide_modulith.location.dto.VisitedLocationDto;
 import com.redha.tourguide_modulith.location.internal.model.Attraction;
-import com.redha.tourguide_modulith.location.internal.model.Location;
 import com.redha.tourguide_modulith.location.internal.model.VisitedLocation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
@@ -23,23 +25,27 @@ public class LocationService implements LocationApi {
     private final GpsUtilAdapter gpsUtilAdapter;
     private final TaskExecutor customTaskExecutor;
     private final ApplicationEventPublisher eventPublisher;
+    private final LocationMapper locationMapper;
 
-    public LocationService(GpsUtilAdapter gpsUtilAdapter, TaskExecutor customTaskExecutor, ApplicationEventPublisher eventPublisher) {
+    public LocationService(GpsUtilAdapter gpsUtilAdapter, TaskExecutor customTaskExecutor, ApplicationEventPublisher eventPublisher, LocationMapper locationMapper) {
         this.gpsUtilAdapter = gpsUtilAdapter;
         this.customTaskExecutor = customTaskExecutor;
         this.eventPublisher = eventPublisher;
+        this.locationMapper = locationMapper;
     }
 
-    public VisitedLocation getUserLocation(UUID userId) {
-        return gpsUtilAdapter.getUserLocation(userId);
-    }
-
-    public VisitedLocation trackUserLocation(UUID userId) {
+    public VisitedLocationDto getUserLocation(UUID userId) {
         VisitedLocation visitedLocation = gpsUtilAdapter.getUserLocation(userId);
+        return locationMapper.toDto(visitedLocation);
+    }
 
-        eventPublisher.publishEvent(new TrackSuccessEvent(this, userId, visitedLocation));
+    public VisitedLocationDto trackUserLocation(UUID userId) {
+        VisitedLocation visitedLocation = gpsUtilAdapter.getUserLocation(userId);
+        VisitedLocationDto visitedLocationDto = locationMapper.toDto(visitedLocation);
 
-        return visitedLocation;
+        eventPublisher.publishEvent(new TrackSuccessEvent(this, userId, visitedLocationDto));
+
+        return visitedLocationDto;
     }
 
 //    public CompletableFuture<VisitedLocation> getUserLocationAsync(User user) {
@@ -72,16 +78,17 @@ public class LocationService implements LocationApi {
 //                });
 //    }
 
-    public List<Attraction> getAttractions() {
-        return gpsUtilAdapter.getAttractions();
+    public List<AttractionDto> getAttractions() {
+        List<Attraction> attractions = gpsUtilAdapter.getAttractions();
+        return attractions.stream().map(locationMapper::toDto).toList();
     }
 
-    public boolean nearAttraction(VisitedLocation visitedLocation, Attraction attraction) {
-        return !(getDistance(attraction, visitedLocation.location())
+    public boolean nearAttraction(VisitedLocationDto visitedLocation, AttractionDto attraction) {
+        return !(getDistance(visitedLocation.location, attraction)
                 > DEFAULT_PROXIMITY_BUFFER);
     }
 
-    public double getDistance(Location loc1, Location loc2) {
+    public double getDistance(LocationDto loc1, LocationDto loc2) {
         double lat1 = Math.toRadians(loc1.latitude);
         double lon1 = Math.toRadians(loc1.longitude);
         double lat2 = Math.toRadians(loc2.latitude);

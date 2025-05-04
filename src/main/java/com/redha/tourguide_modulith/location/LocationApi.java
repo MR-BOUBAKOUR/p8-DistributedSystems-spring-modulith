@@ -1,5 +1,8 @@
 package com.redha.tourguide_modulith.location;
 
+import com.redha.tourguide_modulith.location.dto.AttractionDto;
+import com.redha.tourguide_modulith.location.dto.LocationDto;
+import com.redha.tourguide_modulith.location.dto.VisitedLocationDto;
 import com.redha.tourguide_modulith.location.internal.model.Attraction;
 import com.redha.tourguide_modulith.location.internal.model.Location;
 import com.redha.tourguide_modulith.location.internal.model.VisitedLocation;
@@ -9,14 +12,14 @@ import java.util.UUID;
 
 public interface LocationApi {
 
-    VisitedLocation getUserLocation(UUID userId);
+    VisitedLocationDto getUserLocation(UUID userId);
 
-    VisitedLocation trackUserLocation(UUID userId);
+    VisitedLocationDto trackUserLocation(UUID userId);
 
-    List<Attraction> getAttractions();
+    List<AttractionDto> getAttractions();
 
-    boolean nearAttraction(VisitedLocation visitedLocation, Attraction attraction);
+    boolean nearAttraction(VisitedLocationDto visitedLocation, AttractionDto attraction);
 
-    double getDistance(Location loc1, Location loc2);
+    double getDistance(LocationDto loc1, LocationDto loc2);
 
 }

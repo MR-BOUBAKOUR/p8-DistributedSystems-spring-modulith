@@ -1,13 +1,14 @@
 package com.redha.tourguide_modulith.reward.internal;
 
 import com.redha.tourguide_modulith.location.LocationApi;
-import com.redha.tourguide_modulith.location.internal.model.Attraction;
-import com.redha.tourguide_modulith.location.internal.model.VisitedLocation;
+import com.redha.tourguide_modulith.location.dto.AttractionDto;
+import com.redha.tourguide_modulith.location.dto.VisitedLocationDto;
 import com.redha.tourguide_modulith.reward.RewardApi;
 import com.redha.tourguide_modulith.user.UserApi;
-import com.redha.tourguide_modulith.user.internal.model.User;
-import com.redha.tourguide_modulith.user.internal.model.UserReward;
+import com.redha.tourguide_modulith.user.dto.UserDto;
+import com.redha.tourguide_modulith.user.dto.UserRewardDto;
 import com.redha.tourguide_modulith.user.VisitedLocationAddedEvent;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.task.TaskExecutor;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Slf4j
+@AllArgsConstructor
 @Service
 public class RewardService implements RewardApi {
 
@@ -25,13 +27,6 @@ public class RewardService implements RewardApi {
     private final LocationApi locationApi;
     private final UserApi userApi;
     private final TaskExecutor customTaskExecutor;
-
-    public RewardService(RewardCentralAdapter rewardCentralAdapter, LocationApi locationApi, UserApi userApi, TaskExecutor customTaskExecutor) {
-        this.rewardCentralAdapter = rewardCentralAdapter;
-        this.locationApi = locationApi;
-        this.userApi = userApi;
-        this.customTaskExecutor = customTaskExecutor;
-    }
 
     @Override
     @EventListener
@@ -41,19 +36,19 @@ public class RewardService implements RewardApi {
     }
 
     public void calculateRewards(UUID userId) {
-        User user = userApi.getUser(userId);
+        UserDto user = userApi.getUser(userId);
 
-        List<VisitedLocation> visitedLocations = new ArrayList<>(user.getVisitedLocations());
-        List<Attraction> attractions = locationApi.getAttractions();
+        List<VisitedLocationDto> visitedLocations = new ArrayList<>(user.getVisitedLocations());
+        List<AttractionDto> attractions = locationApi.getAttractions();
 
-        for(VisitedLocation visitedLocation : visitedLocations) {
-            for(Attraction attraction : attractions) {
+        for(VisitedLocationDto visitedLocation : visitedLocations) {
+            for(AttractionDto attraction : attractions) {
                 if(locationApi.nearAttraction(visitedLocation, attraction)) {
-                    user.addToUserRewards(
-                            new UserReward(
+                    userApi.addUserRewards(userId,
+                            new UserRewardDto(
                                     visitedLocation,
                                     attraction,
-                                    getRewardPoints(attraction.attractionId, user.getUserId()))
+                                    getRewardPoints(attraction.getAttractionId(), user.getUserId()))
                     );
                 }
             }

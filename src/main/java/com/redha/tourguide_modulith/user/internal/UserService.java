@@ -1,11 +1,12 @@
 package com.redha.tourguide_modulith.user.internal;
 
 import com.redha.tourguide_modulith.location.TrackSuccessEvent;
-import com.redha.tourguide_modulith.location.internal.model.VisitedLocation;
+import com.redha.tourguide_modulith.location.dto.VisitedLocationDto;
 import com.redha.tourguide_modulith.user.UserApi;
 import com.redha.tourguide_modulith.user.VisitedLocationAddedEvent;
+import com.redha.tourguide_modulith.user.dto.UserDto;
+import com.redha.tourguide_modulith.user.dto.UserRewardDto;
 import com.redha.tourguide_modulith.user.internal.model.User;
-import com.redha.tourguide_modulith.user.internal.model.UserReward;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
@@ -21,13 +22,15 @@ public class UserService implements UserApi {
 
     private StartupInitializer startupInitialize;
     private ApplicationEventPublisher eventPublisher;
+    private UserMapper userMapper;
 
     @Override
     @EventListener
     public void handleTrackSuccess(TrackSuccessEvent event) {
 
+
         UUID userId = event.getUserId();
-        VisitedLocation visitedLocation = event.getVisitedLocation();
+        VisitedLocationDto visitedLocation = event.getVisitedLocation();
 
         addVisitedLocation(userId, visitedLocation);
 
@@ -35,41 +38,50 @@ public class UserService implements UserApi {
 
     }
 
-    public List<User> getAllUsers() {
-        return new ArrayList<>(startupInitialize.getInternalUserMap().values());
+    public List<UserDto> getAllUsers() {
+        return startupInitialize.getInternalUserMap().values().stream()
+                .map(userMapper::toDto)
+                .toList();
     }
 
+    public UserDto getUser(UUID userId) {
+        User user = startupInitialize.getInternalUserMap().get(userId);
+        return userMapper.toDto(user);
+    }
 
-    public User getUser(UUID userId) {
+    public User getUserInternal(UUID userId) {
         return startupInitialize.getInternalUserMap().get(userId);
     }
 
-    public void addUser(User user) {
+    public void addUser(UserDto userDto) {
+
+        User user = userMapper.toEntity(userDto);
+
         if (!startupInitialize.getInternalUserMap().containsKey(user.getUserId())) {
             startupInitialize.getInternalUserMap().put(user.getUserId(), user);
         }
     }
 
     @Override
-    public void addVisitedLocation(UUID userId, VisitedLocation location) {
+    public void addVisitedLocation(UUID userId, VisitedLocationDto location) {
         // On délègue le comportement à l'entité
-        getUser(userId).addToVisitedLocations(location);
+        getUserInternal(userId).addToVisitedLocations(location);
     }
 
     @Override
     public void clearVisitedLocations(UUID userId) {
-        getUser(userId).clearVisitedLocations();
+        getUserInternal(userId).clearVisitedLocations();
     }
 
     @Override
-    public VisitedLocation getLastVisitedLocation(UUID userId) {
+    public VisitedLocationDto getLastVisitedLocation(UUID userId) {
         // On délègue le comportement à l'entité
-        return getUser(userId).getLastVisitedLocation();
+        return getUserInternal(userId).getLastVisitedLocation();
     }
 
     @Override
-    public void addUserRewards(UUID userId, UserReward userReward) {
+    public void addUserRewards(UUID userId, UserRewardDto userReward) {
         // On délègue le comportement à l'entité
-        getUser(userId).addToUserRewards(userReward);
+        getUserInternal(userId).addToUserRewards(userReward);
     }
 }

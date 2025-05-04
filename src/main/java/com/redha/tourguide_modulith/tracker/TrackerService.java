@@ -2,6 +2,7 @@ package com.redha.tourguide_modulith.tracker;
 
 import com.redha.tourguide_modulith.location.LocationApi;
 import com.redha.tourguide_modulith.user.UserApi;
+import com.redha.tourguide_modulith.user.dto.UserDto;
 import com.redha.tourguide_modulith.user.internal.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.StopWatch;
@@ -42,12 +43,12 @@ public class TrackerService {
         StopWatch stopWatch = new StopWatch();
         while (true) {
             if (Thread.currentThread().isInterrupted() || stop) {
-                log.debug("Tracker stopping");
+                log.info("Tracker stopping");
                 break;
             }
 
-            List<User> users = userApi.getAllUsers();
-            log.debug("Begin Tracker. Tracking {} users.", users.size());
+            List<UserDto> users = userApi.getAllUsers();
+            log.info("Begin Tracker. Tracking {} users.", users.size());
             stopWatch.start();
 
 //            List<CompletableFuture<VisitedLocation>> futures = new ArrayList<>();
@@ -60,12 +61,12 @@ public class TrackerService {
             users.forEach(user -> locationApi.trackUserLocation(user.getUserId()));
 
             stopWatch.stop();
-            log.debug("Tracker Time Elapsed: {} seconds.",
+            log.info("Tracker Time Elapsed: {} seconds.",
                     TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
 
             stopWatch.reset();
             try {
-                log.debug("Tracker sleeping");
+                log.info("Tracker sleeping");
                 TimeUnit.SECONDS.sleep(TRACKING_POLLING_INTERVAL);
             } catch (InterruptedException e) {
                 break;

@@ -1,5 +1,7 @@
 package com.redha.tourguide_modulith.user.internal;
 
+import com.redha.tourguide_modulith.location.dto.LocationDto;
+import com.redha.tourguide_modulith.location.dto.VisitedLocationDto;
 import com.redha.tourguide_modulith.location.internal.model.Location;
 import com.redha.tourguide_modulith.location.internal.model.VisitedLocation;
 import com.redha.tourguide_modulith.user.internal.model.User;
@@ -27,9 +29,9 @@ public class StartupInitializer {
     public void init() {
         if (TEST_MODE) {
             log.info("=== Test Mode ENABLED ===");
-            log.debug(" >>> Starting user initialization <<< ");
+            log.info(" >>> Starting user initialization <<< ");
             initializeInternalUsers();
-            log.debug(" >>> User initialization COMPLETED <<< ");
+            log.info(" >>> User initialization COMPLETED <<< ");
         }
     }
 
@@ -53,14 +55,14 @@ public class StartupInitializer {
 
             internalUserMap.put(user.getUserId(), user);
         });
-        log.debug("Created {} internal test users.", INTERNAL_USER_NUMBER);
+        log.info("Created {} internal test users.", INTERNAL_USER_NUMBER);
     }
 
     private void generateUserLocationHistory(User user) {
         IntStream.range(0, 3).forEach(i -> {
-            user.addToVisitedLocations(new VisitedLocation(
+            user.addToVisitedLocations(new VisitedLocationDto(
                     user.getUserId(),
-                    new Location(generateRandomLatitude(), generateRandomLongitude()),
+                    new LocationDto(generateRandomLatitude(), generateRandomLongitude()),
                     getRandomTime()));
         });
     }

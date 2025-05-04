@@ -1,6 +1,9 @@
 package com.redha.tourguide_modulith.user.internal.model;
 
+import com.redha.tourguide_modulith.location.dto.VisitedLocationDto;
 import com.redha.tourguide_modulith.location.internal.model.VisitedLocation;
+import com.redha.tourguide_modulith.user.dto.UserRewardDto;
+import com.redha.tourguide_modulith.user.dto.UserTripDealDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,10 +27,10 @@ public class User {
     @Setter
     private UserPreferences userPreferences = new UserPreferences();
     @Setter
-    private List<UserTripDeal> tripDeals = new ArrayList<>();
+    private List<UserTripDealDto> tripDeals = new ArrayList<>();
 
-	private final List<VisitedLocation> visitedLocations = new ArrayList<>();
-	private final List<UserReward> userRewards = new ArrayList<>();
+	private final List<VisitedLocationDto> visitedLocations = new ArrayList<>();
+	private final List<UserRewardDto> userRewards = new ArrayList<>();
 
 	public User(UUID userId, String userName, String phoneNumber, String emailAddress) {
 		this.userId = userId;
@@ -36,7 +39,7 @@ public class User {
 		this.emailAddress = emailAddress;
 	}
 
-    public void addToVisitedLocations(VisitedLocation visitedLocation) {
+    public void addToVisitedLocations(VisitedLocationDto visitedLocation) {
 		visitedLocations.add(visitedLocation);
 	}
 
@@ -44,13 +47,13 @@ public class User {
 		visitedLocations.clear();
 	}
 
-	public VisitedLocation getLastVisitedLocation() {
+	public VisitedLocationDto getLastVisitedLocation() {
 		return visitedLocations.getLast();
 	}
 
-    public void addToUserRewards(UserReward userReward) {
+    public void addToUserRewards(UserRewardDto userReward) {
 		boolean attractionAlreadyRewarded = userRewards.stream()
-				.anyMatch(r -> r.attraction.attractionName.equals(userReward.attraction.attractionName));
+				.anyMatch(r -> r.getAttraction().attractionName.equals(userReward.getAttraction().attractionName));
 
 		if(!attractionAlreadyRewarded) {
 			userRewards.add(userReward);

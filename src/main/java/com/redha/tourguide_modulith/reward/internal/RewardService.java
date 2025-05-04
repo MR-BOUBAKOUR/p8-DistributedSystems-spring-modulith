@@ -10,8 +10,6 @@ import com.redha.tourguide_modulith.user.dto.UserRewardDto;
 import com.redha.tourguide_modulith.user.VisitedLocationAddedEvent;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.event.EventListener;
-import org.springframework.core.task.TaskExecutor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,22 +24,6 @@ public class RewardService implements RewardApi {
     private final RewardCentralAdapter rewardCentralAdapter;
     private final LocationApi locationApi;
     private final UserApi userApi;
-
-    /**
-     * Handles the VisitedLocationAddedEvent, triggered when a user visits a new location.
-     * ➤ Origin: Emitted by UserService.handleTrackSuccess after the persistence of the visited location
-     * ➤ Triggers reward calculation logic for the specified user.
-     * ➤ Delegates to calculateRewards(UUID) for processing.
-     */
-    @EventListener(VisitedLocationAddedEvent.class)
-    public void handleVisitedLocationAdded(VisitedLocationAddedEvent event) {
-
-        UUID userId = event.getUserId();
-
-        log.info("📤 VisitedLocationAddedEvent published - User: {}", userId);
-
-        calculateRewards(userId);
-    }
 
     public void calculateRewards(UUID userId) {
         UserDto user = userApi.getUser(userId);
@@ -59,15 +41,7 @@ public class RewardService implements RewardApi {
                                     getRewardPoints(attraction.getAttractionId(), user.getUserId()))
                     );
 
-                    log.info("💎 REWARD GRANTED - User: {}, Attraction: {}, Points: {}, Location: (lat={}, lon={})",
-                            userId,
-                            attraction.getAttractionName(),
-                            getRewardPoints(attraction.getAttractionId(), userId),
-                            visitedLocation.getLocation().getLatitude(),
-                            visitedLocation.getLocation().getLongitude());
-                    log.info("✅ REWARD CALCULATION COMPLETED - User: {}, Total Rewards Granted: {}",
-                            userId,
-                            user.getUserRewards().size());
+                    log.info("💎💎💎💎💎 REWARD GRANTED");
                 }
             }
         }

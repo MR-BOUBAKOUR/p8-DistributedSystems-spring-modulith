@@ -12,7 +12,6 @@ import com.redha.tourguide_modulith.location.internal.model.Attraction;
 import com.redha.tourguide_modulith.location.internal.model.VisitedLocation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.core.task.TaskExecutor;
 import org.springframework.stereotype.Service;
 
 import static com.redha.tourguide_modulith.common.AppDefaultConst.DEFAULT_PROXIMITY_BUFFER;
@@ -49,8 +48,6 @@ public class LocationService implements LocationApi {
         VisitedLocationDto visitedLocationDto = locationMapper.toDto(visitedLocation);
 
         eventPublisher.publishEvent(new TrackSuccessEvent(this, userId, visitedLocationDto));
-
-        log.info("✅ TRACKING COMPLETED - Location data successfully processed for user: {}", visitedLocationDto);
 
         return visitedLocationDto;
     }

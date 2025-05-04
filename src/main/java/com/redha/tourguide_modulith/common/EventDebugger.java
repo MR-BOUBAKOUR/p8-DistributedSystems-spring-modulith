@@ -10,15 +10,14 @@ import org.springframework.stereotype.Component;
 public class EventDebugger {
 
     /**
-     * Capture et log TOUS les événements qui transitent dans l'application
-     * L'annotation @Order(Integer.MIN_VALUE) garantit que ce listener est exécuté en premier
+     * Captures and logs ALL events that pass through the application.
+     * The @Order(Integer.MIN_VALUE) annotation ensures that this listener is executed first.
      */
     @Order(Integer.MIN_VALUE)
     @EventListener
     public void debugAllEvents(Object event) {
-        log.info("🔍 EVENT : {} - {} - Detail : {}",
+        log.info("🔍 EVENT : {} - Detail : {}",
                 event.getClass().getSimpleName(),
-                event.getClass().getName(),
                 event);
     }
 }

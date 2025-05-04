@@ -2,13 +2,13 @@ package com.redha.tourguide_modulith.user.internal;
 
 import com.redha.tourguide_modulith.location.dto.LocationDto;
 import com.redha.tourguide_modulith.location.dto.VisitedLocationDto;
-import com.redha.tourguide_modulith.location.internal.model.Location;
-import com.redha.tourguide_modulith.location.internal.model.VisitedLocation;
+import com.redha.tourguide_modulith.user.UsersInitializedEvent;
 import com.redha.tourguide_modulith.user.internal.model.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
@@ -25,6 +25,8 @@ import static com.redha.tourguide_modulith.common.AppDefaultConst.TEST_MODE;
 @RequiredArgsConstructor
 public class StartupInitializer {
 
+    private final ApplicationEventPublisher eventPublisher;
+
     @EventListener(ApplicationReadyEvent.class)
     public void init() {
         if (TEST_MODE) {
@@ -32,6 +34,8 @@ public class StartupInitializer {
             log.info(" >>> Starting user initialization <<< ");
             initializeInternalUsers();
             log.info(" >>> User initialization COMPLETED <<< ");
+
+            eventPublisher.publishEvent(new UsersInitializedEvent(this));
         }
     }
 

@@ -2,10 +2,12 @@ package com.redha.tourguide_modulith.tracker;
 
 import com.redha.tourguide_modulith.location.LocationApi;
 import com.redha.tourguide_modulith.user.UserApi;
+import com.redha.tourguide_modulith.user.UsersInitializedEvent;
 import com.redha.tourguide_modulith.user.dto.UserDto;
 import com.redha.tourguide_modulith.user.internal.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.StopWatch;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,16 +24,21 @@ public class TrackerService {
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
     private final UserApi userApi;
     private final LocationApi locationApi;
+
     private boolean stop = false;
+    private boolean isTrackingStarted = false;
 
     public TrackerService(UserApi userApi, LocationApi locationApi) {
         this.userApi = userApi;
         this.locationApi = locationApi;
-        startTracking();
     }
 
-    private void startTracking() {
-        executorService.submit(this::run);
+    @EventListener(UsersInitializedEvent.class)
+    public void startTracking() {
+        if (!isTrackingStarted) {
+            isTrackingStarted = true;
+            executorService.submit(this::run);
+        }
     }
 
     public void stopTracking() {
@@ -41,6 +48,7 @@ public class TrackerService {
 
     private void run() {
         StopWatch stopWatch = new StopWatch();
+
         while (true) {
             if (Thread.currentThread().isInterrupted() || stop) {
                 log.info("Tracker stopping");
@@ -48,8 +56,11 @@ public class TrackerService {
             }
 
             List<UserDto> users = userApi.getAllUsers();
+
             log.info("Begin Tracker. Tracking {} users.", users.size());
             stopWatch.start();
+
+            users.forEach(user -> locationApi.trackUserLocation(user.getUserId()));
 
 //            List<CompletableFuture<VisitedLocation>> futures = new ArrayList<>();
 //            users.forEach(user -> {
@@ -58,11 +69,8 @@ public class TrackerService {
 //            });
 //            CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
 
-            users.forEach(user -> locationApi.trackUserLocation(user.getUserId()));
-
             stopWatch.stop();
-            log.info("Tracker Time Elapsed: {} seconds.",
-                    TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
+            log.info("Tracker Time Elapsed: {} seconds.", TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
 
             stopWatch.reset();
             try {

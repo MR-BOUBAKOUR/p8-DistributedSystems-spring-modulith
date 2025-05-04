@@ -7,18 +7,18 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
-import org.springframework.modulith.core.ApplicationModules;
+import org.springframework.modulith.Modulith;
 
 @Slf4j
 @RequiredArgsConstructor
 @SpringBootApplication
+@Modulith
 @ConfigurationPropertiesScan
 public class TourguideModulithApplication {
 
 	private final TrackerService trackerService;
 
 	public static void main(String[] args) {
-		ApplicationModules.of(TourguideModulithApplication.class).verify();
 		SpringApplication.run(TourguideModulithApplication.class, args);
 	}
 

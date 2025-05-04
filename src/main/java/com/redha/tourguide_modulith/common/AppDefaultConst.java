@@ -8,7 +8,7 @@ public class AppDefaultConst {
 
     public static final long TRACKING_POLLING_INTERVAL = TimeUnit.MINUTES.toSeconds(1);
 
-    public static final int INTERNAL_USER_NUMBER = 100;
+    public static final int INTERNAL_USER_NUMBER = 1;
 
     public static final int DEFAULT_PROXIMITY_BUFFER = 10;
 

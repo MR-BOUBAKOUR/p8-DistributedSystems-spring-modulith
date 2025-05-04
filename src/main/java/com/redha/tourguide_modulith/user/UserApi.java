@@ -1,19 +1,13 @@
 package com.redha.tourguide_modulith.user;
 
-import com.redha.tourguide_modulith.location.TrackSuccessEvent;
 import com.redha.tourguide_modulith.location.dto.VisitedLocationDto;
-import com.redha.tourguide_modulith.location.internal.model.VisitedLocation;
 import com.redha.tourguide_modulith.user.dto.UserDto;
 import com.redha.tourguide_modulith.user.dto.UserRewardDto;
-import com.redha.tourguide_modulith.user.internal.model.User;
-import com.redha.tourguide_modulith.user.internal.model.UserReward;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface UserApi {
-
-    void handleTrackSuccess(TrackSuccessEvent event);
 
     // Méthodes de service
 

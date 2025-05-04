@@ -26,12 +26,20 @@ public class RewardService implements RewardApi {
     private final RewardCentralAdapter rewardCentralAdapter;
     private final LocationApi locationApi;
     private final UserApi userApi;
-    private final TaskExecutor customTaskExecutor;
 
-    @Override
-    @EventListener
+    /**
+     * Handles the VisitedLocationAddedEvent, triggered when a user visits a new location.
+     * ➤ Origin: Emitted by UserService.handleTrackSuccess after the persistence of the visited location
+     * ➤ Triggers reward calculation logic for the specified user.
+     * ➤ Delegates to calculateRewards(UUID) for processing.
+     */
+    @EventListener(VisitedLocationAddedEvent.class)
     public void handleVisitedLocationAdded(VisitedLocationAddedEvent event) {
+
         UUID userId = event.getUserId();
+
+        log.info("📤 VisitedLocationAddedEvent published - User: {}", userId);
+
         calculateRewards(userId);
     }
 
@@ -50,9 +58,20 @@ public class RewardService implements RewardApi {
                                     attraction,
                                     getRewardPoints(attraction.getAttractionId(), user.getUserId()))
                     );
+
+                    log.info("💎 REWARD GRANTED - User: {}, Attraction: {}, Points: {}, Location: (lat={}, lon={})",
+                            userId,
+                            attraction.getAttractionName(),
+                            getRewardPoints(attraction.getAttractionId(), userId),
+                            visitedLocation.getLocation().getLatitude(),
+                            visitedLocation.getLocation().getLongitude());
+                    log.info("✅ REWARD CALCULATION COMPLETED - User: {}, Total Rewards Granted: {}",
+                            userId,
+                            user.getUserRewards().size());
                 }
             }
         }
+
     }
 
 //    public CompletableFuture<Void> calculateRewardsAsync(UUID userId) {

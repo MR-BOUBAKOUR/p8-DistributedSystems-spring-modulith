@@ -29,6 +29,8 @@ public class StartupInitializer {
 
     @EventListener(ApplicationReadyEvent.class)
     public void init() {
+        Locale.setDefault(Locale.US);
+
         if (TEST_MODE) {
             log.info("=== Test Mode ENABLED ===");
             log.info(" >>> Starting user initialization <<< ");

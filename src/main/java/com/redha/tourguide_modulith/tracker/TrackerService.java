@@ -4,7 +4,6 @@ import com.redha.tourguide_modulith.location.LocationApi;
 import com.redha.tourguide_modulith.user.UserApi;
 import com.redha.tourguide_modulith.user.UsersInitializedEvent;
 import com.redha.tourguide_modulith.user.dto.UserDto;
-import com.redha.tourguide_modulith.user.internal.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.StopWatch;
 import org.springframework.context.event.EventListener;
@@ -68,6 +67,7 @@ public class TrackerService {
 //                futures.add(future);
 //            });
 //            CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+
 
             stopWatch.stop();
             log.info("Tracker Time Elapsed: {} seconds.", TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));

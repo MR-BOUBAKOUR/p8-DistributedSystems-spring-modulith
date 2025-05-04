@@ -23,13 +23,11 @@ import static com.redha.tourguide_modulith.common.AppDefaultConst.STATUTE_MILES_
 public class LocationService implements LocationApi {
 
     private final GpsUtilAdapter gpsUtilAdapter;
-    private final TaskExecutor customTaskExecutor;
     private final ApplicationEventPublisher eventPublisher;
     private final LocationMapper locationMapper;
 
-    public LocationService(GpsUtilAdapter gpsUtilAdapter, TaskExecutor customTaskExecutor, ApplicationEventPublisher eventPublisher, LocationMapper locationMapper) {
+    public LocationService(GpsUtilAdapter gpsUtilAdapter, ApplicationEventPublisher eventPublisher, LocationMapper locationMapper) {
         this.gpsUtilAdapter = gpsUtilAdapter;
-        this.customTaskExecutor = customTaskExecutor;
         this.eventPublisher = eventPublisher;
         this.locationMapper = locationMapper;
     }
@@ -39,11 +37,20 @@ public class LocationService implements LocationApi {
         return locationMapper.toDto(visitedLocation);
     }
 
+    /**
+     * Tracks the current location of the given user.
+     * ➤ Retrieves the user's location from the GPS adapter (external service).
+     * ➤ Publishes a TrackSuccessEvent to notify that the user's location has been successfully tracked.
+     *    This event is handled by UserService to persist the location
+     * ➤ The persistance will trigger VisitedLocationAddedEvent -> reward calculation.
+     */
     public VisitedLocationDto trackUserLocation(UUID userId) {
         VisitedLocation visitedLocation = gpsUtilAdapter.getUserLocation(userId);
         VisitedLocationDto visitedLocationDto = locationMapper.toDto(visitedLocation);
 
         eventPublisher.publishEvent(new TrackSuccessEvent(this, userId, visitedLocationDto));
+
+        log.info("✅ TRACKING COMPLETED - Location data successfully processed for user: {}", visitedLocationDto);
 
         return visitedLocationDto;
     }

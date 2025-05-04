@@ -24,17 +24,30 @@ public class UserService implements UserApi {
     private ApplicationEventPublisher eventPublisher;
     private UserMapper userMapper;
 
-    @Override
-    @EventListener
+    /**
+     * Handles the TrackSuccessEvent triggered after a user's location has been successfully tracked.
+     * ➤ Origin: Emitted by LocationService.trackUserLocation(UUID userId) after GPS data is processed.
+     * ➤ Adds the visited location to the user's history.
+     * ➤ Then emits a VisitedLocationAddedEvent to trigger downstream actions -> reward calculation.
+     */
+    @EventListener(TrackSuccessEvent.class)
     public void handleTrackSuccess(TrackSuccessEvent event) {
 
-
         UUID userId = event.getUserId();
+
+        log.info("📩 TrackSuccessEvent received - User: {}", userId);
+
         VisitedLocationDto visitedLocation = event.getVisitedLocation();
 
         addVisitedLocation(userId, visitedLocation);
 
         eventPublisher.publishEvent(new VisitedLocationAddedEvent(this, userId, visitedLocation));
+
+        log.info("📍 VISITED LOCATION ADDED - User: {}, Location: (lat={}, lon={}), Time: {}",
+                userId,
+                visitedLocation.getLocation().getLatitude(),
+                visitedLocation.getLocation().getLongitude(),
+                visitedLocation.getTimeVisited());
 
     }
 

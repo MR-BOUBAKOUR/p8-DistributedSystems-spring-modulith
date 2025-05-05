@@ -1,12 +1,10 @@
 package com.redha.tourguide_modulith.reward.internal;
 
-import com.redha.tourguide_modulith.user.VisitedLocationAddedEvent;
+import com.redha.tourguide_modulith.user.event.VisitedLocationAddedEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
-
-import java.util.UUID;
 
 @Slf4j
 @Component

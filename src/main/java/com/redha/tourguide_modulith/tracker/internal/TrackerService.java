@@ -1,8 +1,8 @@
-package com.redha.tourguide_modulith.tracker;
+package com.redha.tourguide_modulith.tracker.internal;
 
 import com.redha.tourguide_modulith.location.LocationApi;
 import com.redha.tourguide_modulith.user.UserApi;
-import com.redha.tourguide_modulith.user.UsersInitializedEvent;
+import com.redha.tourguide_modulith.user.event.UsersInitializedEvent;
 import com.redha.tourguide_modulith.user.dto.UserDto;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.StopWatch;

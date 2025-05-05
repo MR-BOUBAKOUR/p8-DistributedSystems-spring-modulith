@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.redha.tourguide_modulith.location.LocationApi;
-import com.redha.tourguide_modulith.location.TrackSuccessEvent;
+import com.redha.tourguide_modulith.location.event.TrackSuccessEvent;
 import com.redha.tourguide_modulith.location.dto.AttractionDto;
 import com.redha.tourguide_modulith.location.dto.LocationDto;
 import com.redha.tourguide_modulith.location.dto.VisitedLocationDto;

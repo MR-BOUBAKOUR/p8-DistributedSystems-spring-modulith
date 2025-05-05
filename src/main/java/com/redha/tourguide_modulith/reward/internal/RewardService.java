@@ -7,7 +7,6 @@ import com.redha.tourguide_modulith.reward.RewardApi;
 import com.redha.tourguide_modulith.user.UserApi;
 import com.redha.tourguide_modulith.user.dto.UserDto;
 import com.redha.tourguide_modulith.user.dto.UserRewardDto;
-import com.redha.tourguide_modulith.user.VisitedLocationAddedEvent;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

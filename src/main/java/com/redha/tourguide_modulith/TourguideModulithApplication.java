@@ -1,6 +1,6 @@
 package com.redha.tourguide_modulith;
 
-import com.redha.tourguide_modulith.tracker.TrackerService;
+import com.redha.tourguide_modulith.tracker.internal.TrackerService;
 import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.SpringApplication;

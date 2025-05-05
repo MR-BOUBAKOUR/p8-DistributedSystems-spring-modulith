@@ -8,17 +8,15 @@ import com.redha.tourguide_modulith.user.internal.model.User;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.context.ApplicationEventPublisher;
 
 import java.util.*;
 
 @Slf4j
-@Service
 @AllArgsConstructor
+@Service
 public class UserService implements UserApi {
 
     private final StartupInitializer startupInitialize;
-    private final ApplicationEventPublisher eventPublisher;
     private final UserMapper userMapper;
 
     public List<UserDto> getAllUsers() {
@@ -45,8 +43,11 @@ public class UserService implements UserApi {
         }
     }
 
+    public VisitedLocationDto getLastVisitedLocation(UUID userId) {
+        return getUserInternal(userId).getLastVisitedLocation();
+    }
+
     public void addVisitedLocation(UUID userId, VisitedLocationDto location) {
-        // On délègue le comportement à l'entité
         getUserInternal(userId).addToVisitedLocations(location);
     }
 
@@ -54,13 +55,7 @@ public class UserService implements UserApi {
         getUserInternal(userId).clearVisitedLocations();
     }
 
-    public VisitedLocationDto getLastVisitedLocation(UUID userId) {
-        // On délègue le comportement à l'entité
-        return getUserInternal(userId).getLastVisitedLocation();
-    }
-
     public void addUserRewards(UUID userId, UserRewardDto userReward) {
-        // On délègue le comportement à l'entité
         getUserInternal(userId).addToUserRewards(userReward);
     }
 }

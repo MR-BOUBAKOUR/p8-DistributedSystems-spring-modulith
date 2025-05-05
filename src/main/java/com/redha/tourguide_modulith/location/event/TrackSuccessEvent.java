@@ -1,4 +1,4 @@
-package com.redha.tourguide_modulith.location;
+package com.redha.tourguide_modulith.location.event;
 
 import com.redha.tourguide_modulith.location.dto.VisitedLocationDto;
 import lombok.Getter;

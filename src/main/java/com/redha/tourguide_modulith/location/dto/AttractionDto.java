@@ -9,16 +9,16 @@ import java.util.UUID;
 @Getter
 @Setter
 public class AttractionDto extends LocationDto {
+    public UUID attractionId;
     public String attractionName;
     public String city;
     public String state;
-    public UUID attractionId;
 
-    public AttractionDto(double latitude, double longitude, String attractionName, String city, String state, UUID attractionId) {
+    public AttractionDto(double latitude, double longitude, UUID attractionId, String attractionName, String city, String state) {
         super(latitude, longitude);
+        this.attractionId = attractionId;
         this.attractionName = attractionName;
         this.city = city;
         this.state = state;
-        this.attractionId = attractionId;
     }
 }

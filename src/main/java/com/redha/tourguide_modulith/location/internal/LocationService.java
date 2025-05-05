@@ -13,7 +13,6 @@ import com.redha.tourguide_modulith.location.dto.LocationDto;
 import com.redha.tourguide_modulith.location.dto.VisitedLocationDto;
 import com.redha.tourguide_modulith.location.internal.model.Attraction;
 import com.redha.tourguide_modulith.location.internal.model.VisitedLocation;
-import com.redha.tourguide_modulith.reward.RewardApi;
 import com.redha.tourguide_modulith.user.UserApi;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,7 +31,6 @@ public class LocationService implements LocationApi {
     private final ApplicationEventPublisher eventPublisher;
     private final LocationMapper locationMapper;
     private final UserApi userApi;
-    private final RewardApi rewardApi;
 
     public VisitedLocationDto getUserLocation(UUID userId) {
 
@@ -100,16 +98,16 @@ public class LocationService implements LocationApi {
 
         for (AttractionDto nearbyAttraction : fiveNearbyAttractions) {
             double distance = getDistance(nearbyAttraction, visitedLocation.location);
-            int rewardPoints = rewardApi.getRewardPoints(nearbyAttraction.getAttractionId(), userId);
 
             nearbyAttractions.add(new NearbyAttractionDTO(
+                    nearbyAttraction.attractionId,
                     nearbyAttraction.attractionName,
                     nearbyAttraction.latitude,
                     nearbyAttraction.longitude,
                     distance,
-                    rewardPoints,
                     visitedLocation.location.latitude,
-                    visitedLocation.location.longitude
+                    visitedLocation.location.longitude,
+                 0
             ));
 
         }

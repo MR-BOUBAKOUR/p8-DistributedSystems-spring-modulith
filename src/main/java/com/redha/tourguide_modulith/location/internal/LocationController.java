@@ -1,5 +1,6 @@
 package com.redha.tourguide_modulith.location.internal;
 
+import com.redha.tourguide_modulith.gateway.GatewayService;
 import com.redha.tourguide_modulith.location.dto.NearbyAttractionDTO;
 import com.redha.tourguide_modulith.location.dto.VisitedLocationDto;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class LocationController {
 
+    private final GatewayService gatewayService;
     private final LocationService locationService;
 
     @GetMapping("/{userId}")
@@ -23,14 +25,14 @@ public class LocationController {
         return locationService.getUserLocation(userId);
     }
 
+    @GetMapping("/nearby-attractions/{userId}")
+    public List<NearbyAttractionDTO> getNearbyAttractions(@PathVariable UUID userId) {
+        return gatewayService.getNearbyAttractionsWithRewards(userId);
+    }
+
 //    @GetMapping("/{userId}/async")
 //    public CompletableFuture<VisitedLocationDto> getUserLocationAsync(@PathVariable UUID userId) {
 //        return locationService.getUserLocationAsync(userId);
 //    }
-//
-    @GetMapping("/{userId}/nearby-attractions")
-    public List<NearbyAttractionDTO> getNearbyAttractions(@PathVariable UUID userId) {
-        return locationService.getNearbyAttractions(userId);
-    }
 
 }

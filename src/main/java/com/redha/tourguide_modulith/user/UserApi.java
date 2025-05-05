@@ -20,6 +20,7 @@ public interface UserApi {
     void addVisitedLocation(UUID userId, VisitedLocationDto location);
     void clearVisitedLocations(UUID userId);
     VisitedLocationDto getLastVisitedLocation(UUID userId);
+    List<VisitedLocationDto> getVisitedLocations(UUID userId);
 
     void addUserRewards(UUID userId, UserRewardDto userReward);
 }

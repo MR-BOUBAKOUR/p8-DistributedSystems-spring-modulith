@@ -1,15 +1,21 @@
 package com.redha.tourguide_modulith.location.internal;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
 import com.redha.tourguide_modulith.location.LocationApi;
+import com.redha.tourguide_modulith.location.dto.NearbyAttractionDTO;
 import com.redha.tourguide_modulith.location.event.TrackSuccessEvent;
 import com.redha.tourguide_modulith.location.dto.AttractionDto;
 import com.redha.tourguide_modulith.location.dto.LocationDto;
 import com.redha.tourguide_modulith.location.dto.VisitedLocationDto;
 import com.redha.tourguide_modulith.location.internal.model.Attraction;
 import com.redha.tourguide_modulith.location.internal.model.VisitedLocation;
+import com.redha.tourguide_modulith.reward.RewardApi;
+import com.redha.tourguide_modulith.user.UserApi;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
@@ -19,21 +25,21 @@ import static com.redha.tourguide_modulith.common.AppDefaultConst.STATUTE_MILES_
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class LocationService implements LocationApi {
 
     private final GpsUtilAdapter gpsUtilAdapter;
     private final ApplicationEventPublisher eventPublisher;
     private final LocationMapper locationMapper;
-
-    public LocationService(GpsUtilAdapter gpsUtilAdapter, ApplicationEventPublisher eventPublisher, LocationMapper locationMapper) {
-        this.gpsUtilAdapter = gpsUtilAdapter;
-        this.eventPublisher = eventPublisher;
-        this.locationMapper = locationMapper;
-    }
+    private final UserApi userApi;
+    private final RewardApi rewardApi;
 
     public VisitedLocationDto getUserLocation(UUID userId) {
-        VisitedLocation visitedLocation = gpsUtilAdapter.getUserLocation(userId);
-        return locationMapper.toDto(visitedLocation);
+
+        return (userApi.getVisitedLocations(userId).isEmpty())
+                ? trackUserLocation(userId)
+                : userApi.getLastVisitedLocation(userId);
+
     }
 
     /**
@@ -81,6 +87,35 @@ public class LocationService implements LocationApi {
 //                    return null;
 //                });
 //    }
+
+    public List<NearbyAttractionDTO> getNearbyAttractions(UUID userId) {
+        VisitedLocationDto visitedLocation = getUserLocation(userId);
+
+        List<NearbyAttractionDTO> nearbyAttractions = new ArrayList<>();
+
+        List<AttractionDto> fiveNearbyAttractions = getAttractions().stream()
+                .sorted(Comparator.comparingDouble(attraction -> getDistance(attraction, visitedLocation.location)))
+                .limit(5)
+                .toList();
+
+        for (AttractionDto nearbyAttraction : fiveNearbyAttractions) {
+            double distance = getDistance(nearbyAttraction, visitedLocation.location);
+            int rewardPoints = rewardApi.getRewardPoints(nearbyAttraction.getAttractionId(), userId);
+
+            nearbyAttractions.add(new NearbyAttractionDTO(
+                    nearbyAttraction.attractionName,
+                    nearbyAttraction.latitude,
+                    nearbyAttraction.longitude,
+                    distance,
+                    rewardPoints,
+                    visitedLocation.location.latitude,
+                    visitedLocation.location.longitude
+            ));
+
+        }
+
+        return nearbyAttractions;
+    }
 
     public List<AttractionDto> getAttractions() {
         List<Attraction> attractions = gpsUtilAdapter.getAttractions();

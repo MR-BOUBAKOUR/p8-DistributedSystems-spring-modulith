@@ -24,6 +24,11 @@ public class RewardService implements RewardApi {
     private final LocationApi locationApi;
     private final UserApi userApi;
 
+    public int getRewardPoints(UUID attractionId, UUID userId) {
+        return rewardCentralAdapter.getAttractionRewardPoints(
+                attractionId, userId);
+    }
+
     public void calculateRewards(UUID userId) {
         UserDto user = userApi.getUser(userId);
 
@@ -60,9 +65,4 @@ public class RewardService implements RewardApi {
 //                    return null;
 //                });
 //    }
-
-    private int getRewardPoints(UUID attractionId, UUID userId) {
-        return rewardCentralAdapter.getAttractionRewardPoints(
-                attractionId, userId);
-    }
 }

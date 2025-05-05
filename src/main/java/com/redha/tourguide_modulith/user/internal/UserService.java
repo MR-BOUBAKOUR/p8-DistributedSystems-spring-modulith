@@ -43,6 +43,10 @@ public class UserService implements UserApi {
         }
     }
 
+    public List<VisitedLocationDto> getVisitedLocations(UUID userId) {
+        return getUserInternal(userId).getVisitedLocations();
+    }
+
     public VisitedLocationDto getLastVisitedLocation(UUID userId) {
         return getUserInternal(userId).getLastVisitedLocation();
     }

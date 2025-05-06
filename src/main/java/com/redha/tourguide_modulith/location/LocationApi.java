@@ -1,9 +1,9 @@
 package com.redha.tourguide_modulith.location;
 
-import com.redha.tourguide_modulith.domain.AttractionDto;
-import com.redha.tourguide_modulith.domain.LocationDto;
-import com.redha.tourguide_modulith.domain.NearbyAttractionDTO;
-import com.redha.tourguide_modulith.domain.VisitedLocationDto;
+import com.redha.tourguide_modulith.shared.AttractionDto;
+import com.redha.tourguide_modulith.shared.LocationDto;
+import com.redha.tourguide_modulith.shared.NearbyAttractionDTO;
+import com.redha.tourguide_modulith.shared.VisitedLocationDto;
 
 import java.util.List;
 import java.util.UUID;

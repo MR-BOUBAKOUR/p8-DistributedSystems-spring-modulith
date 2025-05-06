@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.UUID;
 
 import com.redha.tourguide_modulith.location.LocationApi;
-import com.redha.tourguide_modulith.domain.NearbyAttractionDTO;
-import com.redha.tourguide_modulith.location.TrackSuccessEvent;
-import com.redha.tourguide_modulith.domain.AttractionDto;
-import com.redha.tourguide_modulith.domain.LocationDto;
-import com.redha.tourguide_modulith.domain.VisitedLocationDto;
+import com.redha.tourguide_modulith.shared.NearbyAttractionDTO;
+import com.redha.tourguide_modulith.shared.TrackSuccessEvent;
+import com.redha.tourguide_modulith.shared.AttractionDto;
+import com.redha.tourguide_modulith.shared.LocationDto;
+import com.redha.tourguide_modulith.shared.VisitedLocationDto;
 import com.redha.tourguide_modulith.location.internal.model.Attraction;
 import com.redha.tourguide_modulith.location.internal.model.VisitedLocation;
 import com.redha.tourguide_modulith.user.UserApi;
@@ -19,8 +19,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
-import static com.redha.tourguide_modulith.common.AppDefaultConst.DEFAULT_PROXIMITY_BUFFER;
-import static com.redha.tourguide_modulith.common.AppDefaultConst.STATUTE_MILES_PER_NAUTICAL_MILE;
+import static com.redha.tourguide_modulith.config.AppDefaultConst.DEFAULT_PROXIMITY_BUFFER;
+import static com.redha.tourguide_modulith.config.AppDefaultConst.STATUTE_MILES_PER_NAUTICAL_MILE;
 
 @Slf4j
 @Service

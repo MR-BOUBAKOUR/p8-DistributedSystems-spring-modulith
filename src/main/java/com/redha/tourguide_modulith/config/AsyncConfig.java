@@ -1,4 +1,4 @@
-package com.redha.tourguide_modulith.common;
+package com.redha.tourguide_modulith.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

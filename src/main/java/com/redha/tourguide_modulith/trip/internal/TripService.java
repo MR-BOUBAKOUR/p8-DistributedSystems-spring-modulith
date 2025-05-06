@@ -2,10 +2,10 @@ package com.redha.tourguide_modulith.trip.internal;
 
 import com.redha.tourguide_modulith.trip.TripApi;
 import com.redha.tourguide_modulith.user.UserApi;
-import com.redha.tourguide_modulith.domain.UserDto;
-import com.redha.tourguide_modulith.domain.UserPreferencesDto;
-import com.redha.tourguide_modulith.domain.UserRewardDto;
-import com.redha.tourguide_modulith.domain.UserTripDealDto;
+import com.redha.tourguide_modulith.shared.UserDto;
+import com.redha.tourguide_modulith.shared.UserPreferencesDto;
+import com.redha.tourguide_modulith.shared.UserRewardDto;
+import com.redha.tourguide_modulith.shared.UserTripDealDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

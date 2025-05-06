@@ -1,6 +1,6 @@
 package com.redha.tourguide_modulith.trip;
 
-import com.redha.tourguide_modulith.domain.UserTripDealDto;
+import com.redha.tourguide_modulith.shared.UserTripDealDto;
 
 import java.util.List;
 import java.util.UUID;

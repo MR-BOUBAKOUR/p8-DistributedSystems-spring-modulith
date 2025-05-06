@@ -1,6 +1,6 @@
 package com.redha.tourguide_modulith;
 
-import com.redha.tourguide_modulith.tracker.internal.TrackerService;
+import com.redha.tourguide_modulith.tracker.TrackerApi;
 import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.SpringApplication;
@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class TourguideModulithApplication {
 
-	private final TrackerService trackerService;
+	private final TrackerApi trackerApi;
 
 	public static void main(String[] args) {
 		SpringApplication.run(TourguideModulithApplication.class, args);
@@ -18,7 +18,7 @@ public class TourguideModulithApplication {
 
 	@PreDestroy
 	public void preDestroy() {
-		trackerService.stopTracking();
+		trackerApi.stopTracking();
 	}
 
 }

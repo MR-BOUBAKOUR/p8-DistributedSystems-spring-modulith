@@ -1,4 +1,4 @@
-package com.redha.tourguide_modulith.common;
+package com.redha.tourguide_modulith.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;

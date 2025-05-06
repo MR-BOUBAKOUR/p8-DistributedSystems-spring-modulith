@@ -7,7 +7,7 @@ import tripPricer.TripPricer;
 import java.util.List;
 import java.util.UUID;
 
-import static com.redha.tourguide_modulith.common.AppDefaultConst.TRIP_PRICER_API_KEY;
+import static com.redha.tourguide_modulith.config.AppDefaultConst.TRIP_PRICER_API_KEY;
 
 @Component
 public class TripPricerAdapter {

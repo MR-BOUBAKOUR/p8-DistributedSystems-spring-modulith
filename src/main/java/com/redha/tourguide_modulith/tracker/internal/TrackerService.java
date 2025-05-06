@@ -3,8 +3,8 @@ package com.redha.tourguide_modulith.tracker.internal;
 import com.redha.tourguide_modulith.location.LocationApi;
 import com.redha.tourguide_modulith.tracker.TrackerApi;
 import com.redha.tourguide_modulith.user.UserApi;
-import com.redha.tourguide_modulith.user.UsersInitializedEvent;
-import com.redha.tourguide_modulith.domain.UserDto;
+import com.redha.tourguide_modulith.shared.UsersInitializedEvent;
+import com.redha.tourguide_modulith.shared.UserDto;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.StopWatch;
 import org.springframework.context.event.EventListener;
@@ -15,11 +15,11 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import static com.redha.tourguide_modulith.common.AppDefaultConst.TRACKING_POLLING_INTERVAL;
+import static com.redha.tourguide_modulith.config.AppDefaultConst.TRACKING_POLLING_INTERVAL;
 
 @Slf4j
 @Service
-public class TrackerService {
+public class TrackerService implements TrackerApi {
 
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
     private final UserApi userApi;

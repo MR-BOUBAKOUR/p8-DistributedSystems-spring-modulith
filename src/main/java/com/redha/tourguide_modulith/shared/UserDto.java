@@ -1,4 +1,4 @@
-package com.redha.tourguide_modulith.domain;
+package com.redha.tourguide_modulith.shared;
 
 import lombok.Getter;
 import lombok.Setter;

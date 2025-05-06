@@ -1,9 +1,9 @@
 package com.redha.tourguide_modulith.user.internal;
 
-import com.redha.tourguide_modulith.domain.UserDto;
-import com.redha.tourguide_modulith.domain.UserPreferencesDto;
-import com.redha.tourguide_modulith.domain.UserRewardDto;
-import com.redha.tourguide_modulith.domain.UserTripDealDto;
+import com.redha.tourguide_modulith.shared.UserDto;
+import com.redha.tourguide_modulith.shared.UserPreferencesDto;
+import com.redha.tourguide_modulith.shared.UserRewardDto;
+import com.redha.tourguide_modulith.shared.UserTripDealDto;
 import com.redha.tourguide_modulith.user.internal.model.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

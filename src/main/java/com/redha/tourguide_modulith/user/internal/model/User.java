@@ -1,8 +1,8 @@
 package com.redha.tourguide_modulith.user.internal.model;
 
-import com.redha.tourguide_modulith.domain.VisitedLocationDto;
-import com.redha.tourguide_modulith.domain.UserRewardDto;
-import com.redha.tourguide_modulith.domain.UserTripDealDto;
+import com.redha.tourguide_modulith.shared.VisitedLocationDto;
+import com.redha.tourguide_modulith.shared.UserRewardDto;
+import com.redha.tourguide_modulith.shared.UserTripDealDto;
 import lombok.Getter;
 import lombok.Setter;
 

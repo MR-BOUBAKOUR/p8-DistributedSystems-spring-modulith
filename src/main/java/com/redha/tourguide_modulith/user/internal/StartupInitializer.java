@@ -1,8 +1,8 @@
 package com.redha.tourguide_modulith.user.internal;
 
-import com.redha.tourguide_modulith.domain.LocationDto;
-import com.redha.tourguide_modulith.domain.VisitedLocationDto;
-import com.redha.tourguide_modulith.user.UsersInitializedEvent;
+import com.redha.tourguide_modulith.shared.LocationDto;
+import com.redha.tourguide_modulith.shared.VisitedLocationDto;
+import com.redha.tourguide_modulith.shared.UsersInitializedEvent;
 import com.redha.tourguide_modulith.user.internal.model.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +17,8 @@ import java.time.ZoneOffset;
 import java.util.*;
 import java.util.stream.IntStream;
 
-import static com.redha.tourguide_modulith.common.AppDefaultConst.INTERNAL_USER_NUMBER;
-import static com.redha.tourguide_modulith.common.AppDefaultConst.TEST_MODE;
+import static com.redha.tourguide_modulith.config.AppDefaultConst.INTERNAL_USER_NUMBER;
+import static com.redha.tourguide_modulith.config.AppDefaultConst.TEST_MODE;
 
 @Slf4j
 @Component

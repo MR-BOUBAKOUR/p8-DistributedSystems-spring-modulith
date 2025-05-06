@@ -1,10 +1,10 @@
 package com.redha.tourguide_modulith.user.internal;
 
-import com.redha.tourguide_modulith.location.dto.AttractionDto;
-import com.redha.tourguide_modulith.location.dto.LocationDto;
-import com.redha.tourguide_modulith.location.dto.VisitedLocationDto;
-import com.redha.tourguide_modulith.user.dto.UserDto;
-import com.redha.tourguide_modulith.user.dto.UserRewardDto;
+import com.redha.tourguide_modulith.domain.AttractionDto;
+import com.redha.tourguide_modulith.domain.LocationDto;
+import com.redha.tourguide_modulith.domain.VisitedLocationDto;
+import com.redha.tourguide_modulith.domain.UserDto;
+import com.redha.tourguide_modulith.domain.UserRewardDto;
 import com.redha.tourguide_modulith.user.internal.model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,7 +12,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.modulith.test.ApplicationModuleTest;
 
 import java.util.*;
 

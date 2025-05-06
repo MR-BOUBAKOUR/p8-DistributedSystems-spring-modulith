@@ -1,6 +1,5 @@
-package com.redha.tourguide_modulith.location.dto;
+package com.redha.tourguide_modulith.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 

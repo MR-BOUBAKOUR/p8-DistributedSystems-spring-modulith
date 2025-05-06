@@ -2,7 +2,7 @@ package com.redha.tourguide_modulith.gateway.internal;
 
 import com.redha.tourguide_modulith.gateway.GatewayApi;
 import com.redha.tourguide_modulith.location.LocationApi;
-import com.redha.tourguide_modulith.location.dto.NearbyAttractionDTO;
+import com.redha.tourguide_modulith.domain.NearbyAttractionDTO;
 import com.redha.tourguide_modulith.reward.RewardApi;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

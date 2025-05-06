@@ -1,9 +1,8 @@
 package com.redha.tourguide_modulith.user;
 
-import com.redha.tourguide_modulith.location.dto.VisitedLocationDto;
-import com.redha.tourguide_modulith.user.dto.UserDto;
-import com.redha.tourguide_modulith.user.dto.UserRewardDto;
-import com.redha.tourguide_modulith.user.dto.UserTripDealDto;
+import com.redha.tourguide_modulith.domain.VisitedLocationDto;
+import com.redha.tourguide_modulith.domain.UserDto;
+import com.redha.tourguide_modulith.domain.UserRewardDto;
 
 import java.util.List;
 import java.util.UUID;

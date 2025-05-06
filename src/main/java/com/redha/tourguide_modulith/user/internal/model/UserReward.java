@@ -1,8 +1,7 @@
 package com.redha.tourguide_modulith.user.internal.model;
 
-import com.redha.tourguide_modulith.location.dto.AttractionDto;
-import com.redha.tourguide_modulith.location.dto.VisitedLocationDto;
-import lombok.Builder;
+import com.redha.tourguide_modulith.domain.AttractionDto;
+import com.redha.tourguide_modulith.domain.VisitedLocationDto;
 import lombok.Getter;
 import lombok.Setter;
 

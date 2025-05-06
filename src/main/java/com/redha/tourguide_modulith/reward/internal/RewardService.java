@@ -1,12 +1,12 @@
 package com.redha.tourguide_modulith.reward.internal;
 
 import com.redha.tourguide_modulith.location.LocationApi;
-import com.redha.tourguide_modulith.location.dto.AttractionDto;
-import com.redha.tourguide_modulith.location.dto.VisitedLocationDto;
+import com.redha.tourguide_modulith.domain.AttractionDto;
+import com.redha.tourguide_modulith.domain.VisitedLocationDto;
 import com.redha.tourguide_modulith.reward.RewardApi;
 import com.redha.tourguide_modulith.user.UserApi;
-import com.redha.tourguide_modulith.user.dto.UserDto;
-import com.redha.tourguide_modulith.user.dto.UserRewardDto;
+import com.redha.tourguide_modulith.domain.UserDto;
+import com.redha.tourguide_modulith.domain.UserRewardDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

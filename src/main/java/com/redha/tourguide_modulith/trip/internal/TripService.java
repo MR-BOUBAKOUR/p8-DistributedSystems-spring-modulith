@@ -24,7 +24,7 @@ public class TripService implements TripApi {
         this.userApi = userApi;
     }
 
-    public List<Provider> getTripDeals(UUID userId) {
+    public List<UserTripDealDto> getTripDeals(UUID userId) {
 
         UserDto user = userApi.getUser(userId);
 
@@ -47,6 +47,6 @@ public class TripService implements TripApi {
 
         user.setTripDeals(userTripDeals);
 
-        return providers;
+        return userTripDeals;
     }
 }

@@ -1,5 +1,6 @@
-package com.redha.tourguide_modulith.gateway;
+package com.redha.tourguide_modulith.gateway.internal;
 
+import com.redha.tourguide_modulith.gateway.GatewayApi;
 import com.redha.tourguide_modulith.location.LocationApi;
 import com.redha.tourguide_modulith.location.dto.NearbyAttractionDTO;
 import com.redha.tourguide_modulith.reward.RewardApi;
@@ -11,7 +12,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class GatewayService {
+public class GatewayService implements GatewayApi {
 
     private final LocationApi locationApi;
     private final RewardApi rewardApi;

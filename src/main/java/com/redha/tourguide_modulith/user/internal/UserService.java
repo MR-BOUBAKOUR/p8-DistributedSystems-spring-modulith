@@ -4,6 +4,7 @@ import com.redha.tourguide_modulith.location.dto.VisitedLocationDto;
 import com.redha.tourguide_modulith.user.UserApi;
 import com.redha.tourguide_modulith.user.dto.UserDto;
 import com.redha.tourguide_modulith.user.dto.UserRewardDto;
+import com.redha.tourguide_modulith.user.dto.UserTripDealDto;
 import com.redha.tourguide_modulith.user.internal.model.User;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -57,6 +58,10 @@ public class UserService implements UserApi {
 
     public void clearVisitedLocations(UUID userId) {
         getUserInternal(userId).clearVisitedLocations();
+    }
+
+    public List<UserRewardDto> getUserRewards(UUID userId) {
+        return getUserInternal(userId).getUserRewards();
     }
 
     public void addUserRewards(UUID userId, UserRewardDto userReward) {

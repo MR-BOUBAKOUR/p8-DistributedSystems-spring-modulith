@@ -1,5 +1,6 @@
-package com.redha.tourguide_modulith.shared;
+package com.redha.tourguide_modulith.user;
 
+import com.redha.tourguide_modulith.shared.VisitedLocationDto;
 import lombok.Getter;
 import org.springframework.context.ApplicationEvent;
 

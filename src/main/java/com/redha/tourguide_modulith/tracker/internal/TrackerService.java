@@ -3,8 +3,9 @@ package com.redha.tourguide_modulith.tracker.internal;
 import com.redha.tourguide_modulith.location.LocationApi;
 import com.redha.tourguide_modulith.tracker.TrackerApi;
 import com.redha.tourguide_modulith.user.UserApi;
-import com.redha.tourguide_modulith.shared.UsersInitializedEvent;
+import com.redha.tourguide_modulith.user.UsersInitializedEvent;
 import com.redha.tourguide_modulith.shared.UserDto;
+import jakarta.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.StopWatch;
 import org.springframework.context.event.EventListener;
@@ -41,7 +42,9 @@ public class TrackerService implements TrackerApi {
         }
     }
 
+    @PreDestroy
     public void stopTracking() {
+        log.info("Stopping tracker during application shutdown");
         stop = true;
         executorService.shutdownNow();
     }

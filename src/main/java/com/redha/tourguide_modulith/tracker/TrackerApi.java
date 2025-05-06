@@ -1,6 +1,6 @@
 package com.redha.tourguide_modulith.tracker;
 
-import com.redha.tourguide_modulith.shared.UsersInitializedEvent;
+import com.redha.tourguide_modulith.user.UsersInitializedEvent;
 import org.springframework.context.event.EventListener;
 
 public interface TrackerApi {

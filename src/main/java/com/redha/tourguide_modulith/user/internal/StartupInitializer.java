@@ -2,7 +2,7 @@ package com.redha.tourguide_modulith.user.internal;
 
 import com.redha.tourguide_modulith.shared.LocationDto;
 import com.redha.tourguide_modulith.shared.VisitedLocationDto;
-import com.redha.tourguide_modulith.shared.UsersInitializedEvent;
+import com.redha.tourguide_modulith.user.UsersInitializedEvent;
 import com.redha.tourguide_modulith.user.internal.model.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,7 @@
 package com.redha.tourguide_modulith.user.internal;
 
 import com.redha.tourguide_modulith.shared.TrackSuccessEvent;
-import com.redha.tourguide_modulith.shared.VisitedLocationAddedEvent;
+import com.redha.tourguide_modulith.user.VisitedLocationAddedEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;

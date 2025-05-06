@@ -1,4 +1,4 @@
-package com.redha.tourguide_modulith.shared;
+package com.redha.tourguide_modulith.user;
 
 import org.springframework.context.ApplicationEvent;
 

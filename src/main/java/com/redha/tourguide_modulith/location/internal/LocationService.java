@@ -14,6 +14,7 @@ import com.redha.tourguide_modulith.shared.VisitedLocationDto;
 import com.redha.tourguide_modulith.location.internal.model.Attraction;
 import com.redha.tourguide_modulith.location.internal.model.VisitedLocation;
 import com.redha.tourguide_modulith.user.UserApi;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
@@ -28,6 +29,7 @@ import static com.redha.tourguide_modulith.config.AppDefaultConst.STATUTE_MILES_
 public class LocationService implements LocationApi {
 
     private final GpsUtilAdapter gpsUtilAdapter;
+    @Getter
     private final ApplicationEventPublisher publisher;
     private final LocationMapper locationMapper;
     private final UserApi userApi;
@@ -48,9 +50,10 @@ public class LocationService implements LocationApi {
      * ➤ The persistance will trigger VisitedLocationAddedEvent -> reward calculation.
      */
     public VisitedLocationDto trackUserLocation(UUID userId) {
+        log.info("Tracking user location for {}", userId);
         VisitedLocation visitedLocation = gpsUtilAdapter.getUserLocation(userId);
         VisitedLocationDto visitedLocationDto = locationMapper.toDto(visitedLocation);
-
+        log.info("Publishing event for {}", userId);
         publisher.publishEvent(new UserLocationTrackedEvent(this, userId, visitedLocationDto));
 
         return visitedLocationDto;

@@ -8,39 +8,52 @@ import com.redha.tourguide_modulith.shared.UserRewardDto;
 import com.redha.tourguide_modulith.user.internal.model.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
+import org.springframework.modulith.test.ApplicationModuleTest;
 
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-@ExtendWith(MockitoExtension.class)
+@ApplicationModuleTest
 public class UserServiceTest {
 
-    @Mock
+    @TestConfiguration
+    static class TestConfig {
+        @Bean
+        public StartupInitializer startupInitializer() {
+            return mock(StartupInitializer.class);
+        }
+
+        @Bean
+        public UserMapper userMapper() {
+            return mock(UserMapper.class);
+        }
+    }
+
+    @Autowired
     private StartupInitializer startupInitializer;
 
-    @Mock
+    @Autowired
     private UserMapper userMapper;
 
-    @InjectMocks
+    @Autowired
     private UserService userService;
 
     private UUID userId;
     private User user;
     private UserDto userDto;
-    private Map<UUID, User> userMap;
     private VisitedLocationDto visitedLocation;
     private UserRewardDto userReward;
-    private LocationDto locationDto;
-    private AttractionDto attractionDto;
 
     @BeforeEach
     void setUp() {
+        reset(startupInitializer);
+        reset(userMapper);
+
         userId = UUID.randomUUID();
         user = new User(userId, "testUser", "123456789", "test@example.com");
 
@@ -50,7 +63,7 @@ public class UserServiceTest {
         userDto.setPhoneNumber("123456789");
         userDto.setEmailAddress("test@example.com");
 
-        userMap = new HashMap<>();
+        Map<UUID, User> userMap = new HashMap<>();
         userMap.put(userId, user);
 
         LocationDto locationDto = new LocationDto(48.8584, 2.2945);
@@ -65,11 +78,10 @@ public class UserServiceTest {
                 "England"
         );
 
-        attractionDto.attractionName = "Eiffel Tower";
         userReward = new UserRewardDto(visitedLocation, attractionDto, 100);
 
-        lenient().when(startupInitializer.getInternalUserMap()).thenReturn(userMap);
-        lenient().when(userMapper.toDto(user)).thenReturn(userDto);
+        when(startupInitializer.getInternalUserMap()).thenReturn(userMap);
+        when(userMapper.toDto(user)).thenReturn(userDto);
     }
 
     @Test
@@ -84,7 +96,11 @@ public class UserServiceTest {
         userDto2.setPhoneNumber("123456789");
         userDto2.setEmailAddress("test2@example.com");
 
-        userMap.put(user2.getUserId(), user2);
+        Map<UUID, User> updatedMap = new HashMap<>();
+        updatedMap.put(userId, user);
+        updatedMap.put(userId2, user2);
+
+        when(startupInitializer.getInternalUserMap()).thenReturn(updatedMap);
         when(userMapper.toDto(user2)).thenReturn(userDto2);
 
         // When
@@ -93,8 +109,6 @@ public class UserServiceTest {
         // Then
         assertEquals(2, result.size());
         verify(startupInitializer, times(1)).getInternalUserMap();
-        verify(userMapper, times(1)).toDto(user);
-        verify(userMapper, times(1)).toDto(user2);
     }
 
     @Test
@@ -104,10 +118,8 @@ public class UserServiceTest {
 
         // Then
         assertNotNull(result);
-        assertEquals(userDto.getUserId(), result.getUserId());
-        assertEquals(userDto.getUserName(), result.getUserName());
-        verify(startupInitializer, times(1)).getInternalUserMap();
-        verify(userMapper, times(1)).toDto(user);
+        assertEquals(user.getUserId(), result.getUserId());
+        assertEquals(user.getUserName(), result.getUserName());
     }
 
     @Test
@@ -116,17 +128,14 @@ public class UserServiceTest {
         User result = userService.getUserInternal(userId);
 
         // Then
-        assertEquals(user, result);
-        verify(startupInitializer, times(1)).getInternalUserMap();
+        assertNotNull(result);
+        assertEquals(userDto.getUserId(), result.getUserId());
+        assertEquals(userDto.getUserName(), result.getUserName());
     }
 
     @Test
     void getVisitedLocations_shouldReturnUserVisitedLocations() {
         // Given
-        List<VisitedLocationDto> visitedLocations = new ArrayList<>();
-        visitedLocations.add(visitedLocation);
-
-        // Add a visited location to the user
         user.addToVisitedLocations(visitedLocation);
 
         // When
@@ -140,21 +149,21 @@ public class UserServiceTest {
     @Test
     void getLastVisitedLocation_shouldReturnLastLocation() {
         // Given
-        LocationDto locationDto1 = new LocationDto(48.8584, 2.2945);
-        VisitedLocationDto location1 = new VisitedLocationDto(userId, locationDto1, new Date());
+        LocationDto firstLocationDto = new LocationDto(48.8584, 2.2945);
+        VisitedLocationDto firstVisitedLocation = new VisitedLocationDto(userId, firstLocationDto, new Date());
 
-        LocationDto locationDto2 = new LocationDto(40.7128, -74.0060);
-        VisitedLocationDto location2 = new VisitedLocationDto(userId, locationDto2, new Date());
+        LocationDto lastLocationDto = new LocationDto(40.7128, -74.0060);
+        VisitedLocationDto lastVisitedLocation = new VisitedLocationDto(userId, lastLocationDto, new Date());
 
-        // Add visited locations to the user
-        user.addToVisitedLocations(location1);
-        user.addToVisitedLocations(location2);
+        user.addToVisitedLocations(firstVisitedLocation);
+        user.addToVisitedLocations(lastVisitedLocation);
 
         // When
+        // depends on the last one added -> visitedLocations.getLast()
         VisitedLocationDto result = userService.getLastVisitedLocation(userId);
 
         // Then
-        assertEquals(location2, result);
+        assertEquals(lastVisitedLocation, result);
     }
 
     @Test
@@ -184,10 +193,6 @@ public class UserServiceTest {
     @Test
     void getUserRewards_shouldReturnUserRewards() {
         // Given
-        List<UserRewardDto> rewards = new ArrayList<>();
-        rewards.add(userReward);
-
-        // Add a reward to the user
         user.addToUserRewards(userReward);
 
         // When

@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 public class UserEventListener {
 
     private final UserService userService;
-    private final ApplicationEventPublisher eventPublisher;
+    private final ApplicationEventPublisher publisher;
 
     /**
      * Handles the TrackSuccessEvent triggered after a user's location has been successfully tracked.
@@ -23,12 +23,11 @@ public class UserEventListener {
      * ➤ Then emits a VisitedLocationAddedEvent to trigger downstream actions -> reward calculation.
      */
     @EventListener
-    public void handleTrackSuccess(UserLocationTrackedEvent event) {
+    public void handleUserLocationTrackedEvent(UserLocationTrackedEvent event) {
 
         userService.addVisitedLocation(event.getUserId(), event.getVisitedLocation());
 
-        eventPublisher.publishEvent(new VisitedLocationAddedEvent(this, event.getUserId(), event.getVisitedLocation()));
-
+        publisher.publishEvent(new VisitedLocationAddedEvent(this, event.getUserId(), event.getVisitedLocation()));
     }
 }
 

@@ -28,7 +28,7 @@ import static com.redha.tourguide_modulith.config.AppDefaultConst.STATUTE_MILES_
 public class LocationService implements LocationApi {
 
     private final GpsUtilAdapter gpsUtilAdapter;
-    private final ApplicationEventPublisher eventPublisher;
+    private final ApplicationEventPublisher publisher;
     private final LocationMapper locationMapper;
     private final UserApi userApi;
 
@@ -51,7 +51,7 @@ public class LocationService implements LocationApi {
         VisitedLocation visitedLocation = gpsUtilAdapter.getUserLocation(userId);
         VisitedLocationDto visitedLocationDto = locationMapper.toDto(visitedLocation);
 
-        eventPublisher.publishEvent(new UserLocationTrackedEvent(this, userId, visitedLocationDto));
+        publisher.publishEvent(new UserLocationTrackedEvent(this, userId, visitedLocationDto));
 
         return visitedLocationDto;
     }

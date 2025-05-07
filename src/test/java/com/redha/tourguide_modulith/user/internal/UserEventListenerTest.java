@@ -1,14 +1,17 @@
 package com.redha.tourguide_modulith.user.internal;
 
+
 import com.redha.tourguide_modulith.shared.LocationDto;
 import com.redha.tourguide_modulith.shared.UserLocationTrackedEvent;
 import com.redha.tourguide_modulith.shared.VisitedLocationDto;
 import com.redha.tourguide_modulith.user.VisitedLocationAddedEvent;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 import org.springframework.modulith.test.ApplicationModuleTest;
 
 import java.util.Date;
@@ -22,7 +25,8 @@ import static org.mockito.Mockito.*;
 class UserEventListenerTest {
 
     private final UserService userService;
-    private final ApplicationEventPublisher applicationEventPublisher;
+    private final ApplicationEventPublisher publisher;
+    private final UserEventListener userEventListener;
 
     @TestConfiguration
     static class TestConfig {
@@ -33,27 +37,29 @@ class UserEventListenerTest {
         }
 
         @Bean
+        @Primary
         public ApplicationEventPublisher applicationEventPublisher() {
             return mock(ApplicationEventPublisher.class);
+        }
+
+        @Bean
+        public UserEventListener userEventListener(UserService userService, ApplicationEventPublisher publisher) {
+            return new UserEventListener(userService, publisher);
         }
     }
 
     @Test
-    void testHandleTrackSuccess() {
-
+    void testHandleUserLocationTrackedEvent() {
+        // given
         UUID userId = UUID.randomUUID();
-
         VisitedLocationDto visitedLocation = new VisitedLocationDto(userId, new LocationDto(48.8566, 2.3522), new Date());
-
         UserLocationTrackedEvent event = new UserLocationTrackedEvent(this, userId, visitedLocation);
 
-        UserEventListener userEventListener = new UserEventListener(userService, applicationEventPublisher);
+        // when
+        userEventListener.handleUserLocationTrackedEvent(event);
 
-        userEventListener.handleTrackSuccess(event);
-
+        // then
         verify(userService, times(1)).addVisitedLocation(userId, visitedLocation);
-
-        verify(applicationEventPublisher, times(1)).publishEvent(any(VisitedLocationAddedEvent.class));
-
+        verify(publisher, times(1)).publishEvent(any(VisitedLocationAddedEvent.class));
     }
 }

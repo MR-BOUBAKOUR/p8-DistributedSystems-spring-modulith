@@ -52,16 +52,25 @@ public class StartupInitializer {
     private final Map<UUID, User> internalUserMap = new HashMap<>();
 
     void initializeInternalUsers() {
-        IntStream.range(0, INTERNAL_USER_NUMBER).forEach(i -> {
-            String userName = "internalUser" + i;
-            String phone = "000";
-            String email = userName + "@tourGuide.com";
-            User user = new User(UUID.randomUUID(), userName, phone, email);
-            generateUserLocationHistory(user);
 
+        // fixedUser for tests / HTTPs requests
+        UUID fixedUuid = UUID.fromString("11111111-1111-1111-1111-111111111111");
+        String fixedUsername = "internalUser0";
+        String fixedPhone = "000";
+        String fixedEmail = fixedUsername + "@tourGuide.com";
+        User fixedUser = new User(fixedUuid, fixedUsername, fixedPhone, fixedEmail);
+        generateUserLocationHistory(fixedUser);
+        internalUserMap.put(fixedUser.getUserId(), fixedUser);
+
+        // the rest of the users depending on (INTERNAL_USER_NUMBER - 1)
+        IntStream.range(1, INTERNAL_USER_NUMBER).forEach(i -> {
+            String dynamicUserName = "internalUser" + i;
+            String dynamicEmail = dynamicUserName + "@tourGuide.com";
+            User user = new User(UUID.randomUUID(), dynamicUserName, "000", dynamicEmail);
+            generateUserLocationHistory(user);
             internalUserMap.put(user.getUserId(), user);
         });
-        log.info("Created {} internal test users.", INTERNAL_USER_NUMBER);
+        log.info("Created {} internal test users (1 fixed UUID, {} random).", INTERNAL_USER_NUMBER, INTERNAL_USER_NUMBER - 1);
     }
 
     private void generateUserLocationHistory(User user) {

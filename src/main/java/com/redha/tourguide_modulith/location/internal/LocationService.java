@@ -7,7 +7,7 @@ import java.util.UUID;
 
 import com.redha.tourguide_modulith.location.LocationApi;
 import com.redha.tourguide_modulith.shared.NearbyAttractionDTO;
-import com.redha.tourguide_modulith.shared.TrackSuccessEvent;
+import com.redha.tourguide_modulith.shared.UserLocationTrackedEvent;
 import com.redha.tourguide_modulith.shared.AttractionDto;
 import com.redha.tourguide_modulith.shared.LocationDto;
 import com.redha.tourguide_modulith.shared.VisitedLocationDto;
@@ -51,7 +51,7 @@ public class LocationService implements LocationApi {
         VisitedLocation visitedLocation = gpsUtilAdapter.getUserLocation(userId);
         VisitedLocationDto visitedLocationDto = locationMapper.toDto(visitedLocation);
 
-        eventPublisher.publishEvent(new TrackSuccessEvent(this, userId, visitedLocationDto));
+        eventPublisher.publishEvent(new UserLocationTrackedEvent(this, userId, visitedLocationDto));
 
         return visitedLocationDto;
     }

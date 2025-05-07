@@ -6,9 +6,9 @@ import com.redha.tourguide_modulith.shared.VisitedLocationDto;
 import com.redha.tourguide_modulith.shared.UserDto;
 import com.redha.tourguide_modulith.shared.UserRewardDto;
 import com.redha.tourguide_modulith.user.internal.model.User;
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.modulith.test.ApplicationModuleTest;
@@ -18,8 +18,13 @@ import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@RequiredArgsConstructor
 @ApplicationModuleTest
 public class UserServiceTest {
+
+    private final StartupInitializer startupInitializer;
+    private final UserMapper userMapper;
+    private final UserService userService;
 
     @TestConfiguration
     static class TestConfig {
@@ -33,15 +38,6 @@ public class UserServiceTest {
             return mock(UserMapper.class);
         }
     }
-
-    @Autowired
-    private StartupInitializer startupInitializer;
-
-    @Autowired
-    private UserMapper userMapper;
-
-    @Autowired
-    private UserService userService;
 
     private UUID userId;
     private User user;

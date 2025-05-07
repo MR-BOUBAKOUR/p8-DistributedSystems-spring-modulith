@@ -1,6 +1,6 @@
 package com.redha.tourguide_modulith.user.internal;
 
-import com.redha.tourguide_modulith.shared.TrackSuccessEvent;
+import com.redha.tourguide_modulith.shared.UserLocationTrackedEvent;
 import com.redha.tourguide_modulith.user.VisitedLocationAddedEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +23,7 @@ public class UserEventListener {
      * ➤ Then emits a VisitedLocationAddedEvent to trigger downstream actions -> reward calculation.
      */
     @EventListener
-    public void handleTrackSuccess(TrackSuccessEvent event) {
+    public void handleTrackSuccess(UserLocationTrackedEvent event) {
 
         userService.addVisitedLocation(event.getUserId(), event.getVisitedLocation());
 

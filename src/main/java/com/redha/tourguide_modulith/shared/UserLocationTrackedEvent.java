@@ -6,12 +6,12 @@ import org.springframework.context.ApplicationEvent;
 import java.util.UUID;
 
 @Getter
-public class TrackSuccessEvent extends ApplicationEvent {
+public class UserLocationTrackedEvent extends ApplicationEvent {
 
     private final UUID userId;
     private final VisitedLocationDto visitedLocation;
 
-    public TrackSuccessEvent(Object source, UUID userId, VisitedLocationDto visitedLocation) {
+    public UserLocationTrackedEvent(Object source, UUID userId, VisitedLocationDto visitedLocation) {
         super(source);
         this.userId = userId;
         this.visitedLocation = visitedLocation;

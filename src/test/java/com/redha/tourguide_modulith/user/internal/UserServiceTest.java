@@ -53,7 +53,17 @@ public class UserServiceTest {
         userId = UUID.randomUUID();
         user = new User(userId, "testUser", "123456789", "test@example.com");
 
-        userDto = new UserDto();
+        userDto = new UserDto(
+                userId,
+                "testUser",
+                "123-456-7890",
+                "test@example.com",
+                new Date(),
+                null,
+                null,
+                null,
+                null
+        );
         userDto.setUserId(userId);
         userDto.setUserName("testUser");
         userDto.setPhoneNumber("123456789");
@@ -86,11 +96,17 @@ public class UserServiceTest {
         UUID userId2 = UUID.randomUUID();
         User user2 = new User(userId2, "testUser2", "123456789", "test2@example.com");
 
-        UserDto userDto2 = new UserDto();
-        userDto2.setUserId(userId2);
-        userDto2.setUserName("testUser2");
-        userDto2.setPhoneNumber("123456789");
-        userDto2.setEmailAddress("test2@example.com");
+        UserDto userDto2 = new UserDto(
+                userId2,
+                "testUser2",
+                "123456789",
+                "test2@example.com",
+                new Date(),
+                null,
+                null,
+                null,
+                null
+        );
 
         Map<UUID, User> updatedMap = new HashMap<>();
         updatedMap.put(userId, user);

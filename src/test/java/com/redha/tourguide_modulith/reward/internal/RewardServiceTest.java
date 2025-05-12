@@ -60,17 +60,18 @@ class RewardServiceTest {
                 "Test State"
         );
 
-        // Create a sample user
-        userDto = new UserDto();
-        userDto.setUserId(userId);
-        userDto.setUserName("testUser");
-        userDto.setPhoneNumber("123-456-7890");
-        userDto.setEmailAddress("test@example.com");
-        userDto.setLatestLocationTimestamp(new Date());
-        userDto.setUserPreferences(null);
-        userDto.setTripDeals(null);
-        userDto.setVisitedLocations(List.of(visitedLocation));
-        userDto.setUserRewards(null);
+        // Create user DTO
+        userDto = new UserDto(
+                userId,
+                "testUser",
+                "123-456-7890",
+                "test@example.com",
+                new Date(),
+                null,
+                null,
+                List.of(visitedLocation),
+                null
+        );
     }
 
     @Test

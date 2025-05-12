@@ -29,7 +29,6 @@ import static org.mockito.Mockito.*;
 @ApplicationModuleTest
 public class LocationServiceTest {
 
-
     @MockitoBean
     private final GpsUtilAdapter gpsUtilAdapter;
     @MockitoBean
@@ -38,6 +37,7 @@ public class LocationServiceTest {
     private final LocationMapper locationMapper;
     @MockitoBean
     private final UserApi userApi;
+
     @Autowired
     private final LocationService locationService;
 

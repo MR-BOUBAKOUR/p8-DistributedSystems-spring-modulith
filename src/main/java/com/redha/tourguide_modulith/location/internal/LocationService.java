@@ -4,20 +4,19 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 import com.redha.tourguide_modulith.location.LocationApi;
-import com.redha.tourguide_modulith.shared.NearbyAttractionDTO;
-import com.redha.tourguide_modulith.shared.UserLocationTrackedEvent;
-import com.redha.tourguide_modulith.shared.AttractionDto;
-import com.redha.tourguide_modulith.shared.LocationDto;
-import com.redha.tourguide_modulith.shared.VisitedLocationDto;
+import com.redha.tourguide_modulith.shared.*;
 import com.redha.tourguide_modulith.location.internal.model.Attraction;
 import com.redha.tourguide_modulith.location.internal.model.VisitedLocation;
 import com.redha.tourguide_modulith.user.UserApi;
+import com.redha.tourguide_modulith.user.internal.model.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.core.task.TaskExecutor;
 import org.springframework.stereotype.Service;
 
 import static com.redha.tourguide_modulith.config.AppDefaultConst.DEFAULT_PROXIMITY_BUFFER;
@@ -33,6 +32,7 @@ public class LocationService implements LocationApi {
     private final ApplicationEventPublisher publisher;
     private final LocationMapper locationMapper;
     private final UserApi userApi;
+    private final TaskExecutor customTaskExecutor;
 
     public VisitedLocationDto getUserLocation(UUID userId) {
 
@@ -57,35 +57,32 @@ public class LocationService implements LocationApi {
         return visitedLocationDto;
     }
 
-//    public CompletableFuture<VisitedLocation> getUserLocationAsync(User user) {
-//        return (user.getVisitedLocations().isEmpty())
-//                ? trackUserLocationAsync(user)
-//                : CompletableFuture.completedFuture(user.getLastVisitedLocation());
-//    }
-//
-//    public CompletableFuture<VisitedLocation> trackUserLocationAsync(User user) {
-//        return CompletableFuture
-//                .supplyAsync(() -> {
-//                    log.info("TrackUserLocationAsync for user: {} - Thread: {}",
-//                            user.getUserName(), Thread.currentThread().getName());
-//                    return gpsUtilAdapter.getUserLocation(user.getUserId());
-//                }, customTaskExecutor)
-//                .thenApply(visitedLocation -> {
-//                    user.addToVisitedLocations(visitedLocation);
-//                    return visitedLocation;
-//                })
-////                .thenCompose(visitedLocation -> {
-////                    return rewardsService.calculateRewardsAsync(user)
-////                            .thenApply(unused -> {
-////                                log.info("getUserName: {} - getUserRewards: {}", user.getUserName(), user.getUserRewards());
-////                                return visitedLocation;
-////                            });
-////                })
-//                .exceptionally(ex -> {
-//                    log.error("Error in trackUserLocationAsync: {}", ex.getMessage(), ex);
-//                    return null;
-//                });
-//    }
+    public CompletableFuture<VisitedLocationDto> getUserLocationAsync(UUID userId) {
+
+        return (userApi.getVisitedLocations(userId).isEmpty())
+                ? trackUserLocationAsync(userId)
+                : CompletableFuture.completedFuture(userApi.getLastVisitedLocation(userId));
+    }
+
+    public CompletableFuture<VisitedLocationDto> trackUserLocationAsync(UUID userId) {
+        User user = userApi.getUserInternal(userId);
+        return CompletableFuture
+                .supplyAsync(() -> {
+                    log.info("TrackUserLocationAsync for user: {} - Thread: {}",
+                            user.getUserName(), Thread.currentThread().getName());
+                    VisitedLocation visitedLocation = gpsUtilAdapter.getUserLocation(userId);
+                    return locationMapper.toDto(visitedLocation);
+                }, customTaskExecutor)
+                .thenApply(visitedLocationDto -> {
+                    // user.addToVisitedLocations(visitedLocationDto);
+                    publisher.publishEvent(new UserLocationTrackedEvent(this, userId, visitedLocationDto));
+                    return visitedLocationDto;
+                })
+                .exceptionally(ex -> {
+                    log.error("Error in trackUserLocationAsync: {}", ex.getMessage(), ex);
+                    return null;
+                });
+    }
 
     public List<NearbyAttractionDTO> getNearbyAttractions(UUID userId) {
         VisitedLocationDto visitedLocation = getUserLocation(userId);

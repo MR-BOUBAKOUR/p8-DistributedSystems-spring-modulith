@@ -10,15 +10,11 @@ import java.util.concurrent.TimeUnit;
 
 import com.redha.tourguide_modulith.location.internal.LocationService;
 import com.redha.tourguide_modulith.location.internal.model.Attraction;
-import com.redha.tourguide_modulith.location.internal.model.VisitedLocation;
 import com.redha.tourguide_modulith.reward.internal.RewardService;
-import com.redha.tourguide_modulith.shared.AttractionDto;
 import com.redha.tourguide_modulith.shared.LocationDto;
 import com.redha.tourguide_modulith.shared.UserDto;
 import com.redha.tourguide_modulith.shared.VisitedLocationDto;
 import com.redha.tourguide_modulith.tracker.internal.TrackerService;
-import com.redha.tourguide_modulith.trip.internal.TripService;
-import com.redha.tourguide_modulith.user.internal.StartupInitializer;
 import com.redha.tourguide_modulith.user.internal.UserService;
 import com.redha.tourguide_modulith.user.internal.model.User;
 import org.apache.commons.lang3.time.StopWatch;
@@ -38,11 +34,7 @@ public class PerformanceTest {
     @Autowired
     private TrackerService trackerService;
     @Autowired
-    private TripService tripService;
-    @Autowired
     private UserService userService;
-    @Autowired
-    private StartupInitializer startupInitializer;
 
     // ===============================================================================================
     // CHANGE the number of the generated users in " config - AppDefaultConst - INTERNAL_USER_NUMBER "

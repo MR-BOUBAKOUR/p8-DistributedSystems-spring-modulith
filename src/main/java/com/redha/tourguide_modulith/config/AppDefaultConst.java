@@ -6,7 +6,7 @@ public class AppDefaultConst {
 
     public static final boolean TEST_MODE = true;
 
-    public static final long TRACKING_POLLING_INTERVAL = TimeUnit.MINUTES.toSeconds(5);
+    public static long TRACKING_POLLING_INTERVAL = TimeUnit.MINUTES.toSeconds(5);
 
     public static final int INTERNAL_USER_NUMBER = 2;
 

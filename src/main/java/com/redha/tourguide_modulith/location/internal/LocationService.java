@@ -50,10 +50,8 @@ public class LocationService implements LocationApi {
      * ➤ The persistance will trigger VisitedLocationAddedEvent -> reward calculation.
      */
     public VisitedLocationDto trackUserLocation(UUID userId) {
-        log.info("Tracking user location for {}", userId);
         VisitedLocation visitedLocation = gpsUtilAdapter.getUserLocation(userId);
         VisitedLocationDto visitedLocationDto = locationMapper.toDto(visitedLocation);
-        log.info("Publishing event for {}", userId);
         publisher.publishEvent(new UserLocationTrackedEvent(this, userId, visitedLocationDto));
 
         return visitedLocationDto;
@@ -121,6 +119,10 @@ public class LocationService implements LocationApi {
     public List<AttractionDto> getAttractions() {
         List<Attraction> attractions = gpsUtilAdapter.getAttractions();
         return attractions.stream().map(locationMapper::toDto).toList();
+    }
+
+    public List<Attraction> getAttractionsInternal() {
+        return gpsUtilAdapter.getAttractions();
     }
 
     public boolean nearAttraction(VisitedLocationDto visitedLocation, AttractionDto attraction) {

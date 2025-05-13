@@ -25,6 +25,11 @@ public class UserService implements UserApi {
                 .toList();
     }
 
+    public List<User> getAllUsersInternal() {
+        return startupInitialize.getInternalUserMap().values().stream()
+                .toList();
+    }
+
     public UserDto getUser(UUID userId) {
         User user = startupInitialize.getInternalUserMap().get(userId);
         return userMapper.toDto(user);

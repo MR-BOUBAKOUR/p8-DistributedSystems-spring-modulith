@@ -16,8 +16,10 @@ public class EventDebugger {
     @Order(Integer.MIN_VALUE)
     @EventListener
     public void debugAllEvents(Object event) {
+        /*
         log.info("🔍 EVENT : {} - Detail : {}",
                 event.getClass().getSimpleName(),
                 event);
+         */
     }
 }

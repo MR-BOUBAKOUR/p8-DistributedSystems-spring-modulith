@@ -24,7 +24,7 @@ public class RewardEventListener {
 
         rewardService.calculateRewards(event.getUserId());
 
-        log.info("✅ TRACKING COMPLETED - Location data successfully processed for the user : {}", event.getUserId());
+        log.debug("✅ TRACKING COMPLETED - Location data successfully processed for the user : {}", event.getUserId());
     }
 
 }

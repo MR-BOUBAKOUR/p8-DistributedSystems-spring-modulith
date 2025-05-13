@@ -45,7 +45,7 @@ public class RewardService implements RewardApi {
                                     getRewardPoints(attraction.getAttractionId(), user.getUserId()))
                     );
 
-                    log.info("💎💎💎💎💎 REWARD GRANTED to the user {}", user.getUserId());
+                    log.debug("💎💎💎💎💎 REWARD GRANTED to the user {}", user.getUserId());
                 }
             }
         }

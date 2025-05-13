@@ -85,9 +85,11 @@ public class PerformanceTest {
 
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
+
         for (UserDto user : allUsers) {
             locationService.trackUserLocation(user.getUserId());
         }
+
         stopWatch.stop();
         trackerService.stopTracking();
 
@@ -114,12 +116,11 @@ public class PerformanceTest {
         List<User> allUsers = new ArrayList<>();
         allUsers = userService.getAllUsersInternal();
         allUsers.forEach(u -> u.addToVisitedLocations(new VisitedLocationDto(u.getUserId(), locationDto, new Date())));
-
         allUsers.forEach(u -> rewardService.calculateRewards(u.getUserId()));
-
         for (User user : allUsers) {
             assertFalse(user.getUserRewards().isEmpty());
         }
+
         stopWatch.stop();
         trackerService.stopTracking();
 

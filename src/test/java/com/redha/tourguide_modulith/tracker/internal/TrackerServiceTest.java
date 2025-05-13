@@ -35,7 +35,7 @@ class TrackerServiceTest {
 
     @BeforeAll
     static void overrideTrackingInterval() {
-        AppDefaultConst.TRACKING_POLLING_INTERVAL = 1L;
+        AppDefaultConst.TRACKING_POLLING_INTERVAL = 2L;
     }
 
     private UserDto user1;
@@ -119,7 +119,7 @@ class TrackerServiceTest {
         // When
         long startTime = System.currentTimeMillis();
         trackerService.startTracking();
-        TimeUnit.SECONDS.sleep(2);
+        TimeUnit.SECONDS.sleep(3);
         trackerService.stopTracking();
         long endTime = System.currentTimeMillis();
 

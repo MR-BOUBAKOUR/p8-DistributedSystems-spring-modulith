@@ -22,7 +22,8 @@ public class RewardEventListener {
     @EventListener
     public void handleVisitedLocationAdded(VisitedLocationAddedEvent event) {
 
-        rewardService.calculateRewards(event.getUserId());
+        // rewardService.calculateRewards(event.getUserId());
+        rewardService.calculateRewardsAsync(event.getUserId());
 
         log.debug("✅ TRACKING COMPLETED - Location data successfully processed for the user : {}", event.getUserId());
     }

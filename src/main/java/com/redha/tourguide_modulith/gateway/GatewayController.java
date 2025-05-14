@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/api")
@@ -35,10 +36,10 @@ public class GatewayController {
         return locationApi.getUserLocation(userId);
     }
 
-//    @GetMapping("/location/async/{userId}")
-//    public CompletableFuture<VisitedLocationDto> getUserLocationAsync(@PathVariable UUID userId) {
-//    return locationApi.getUserLocationAsync(userId);
-//    }
+    @GetMapping("/location/async/{userId}")
+    public CompletableFuture<VisitedLocationDto> getUserLocationAsync(@PathVariable UUID userId) {
+        return locationApi.getUserLocationAsync(userId);
+    }
 
     @GetMapping("/nearby-attractions/{userId}")
     public List<NearbyAttractionDTO> getNearbyAttractions(@PathVariable UUID userId) {

@@ -7,13 +7,16 @@ import com.redha.tourguide_modulith.reward.RewardApi;
 import com.redha.tourguide_modulith.user.UserApi;
 import com.redha.tourguide_modulith.shared.UserDto;
 import com.redha.tourguide_modulith.shared.UserRewardDto;
+import com.redha.tourguide_modulith.user.internal.model.User;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.task.TaskExecutor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 @Slf4j
 @AllArgsConstructor
@@ -23,6 +26,7 @@ public class RewardService implements RewardApi {
     private final RewardCentralAdapter rewardCentralAdapter;
     private final LocationApi locationApi;
     private final UserApi userApi;
+    private final TaskExecutor customTaskExecutor;
 
     public int getRewardPoints(UUID attractionId, UUID userId) {
         return rewardCentralAdapter.getAttractionRewardPoints(
@@ -52,17 +56,19 @@ public class RewardService implements RewardApi {
 
     }
 
-//    public CompletableFuture<Void> calculateRewardsAsync(UUID userId) {
-//        User user = userApi.getUser(userId);
-//
-//        return CompletableFuture
-//                .runAsync(() -> {
-//                    log.info("CalculateRewardsAsync for user: {} - Thread: {}", user.getUserName(), Thread.currentThread().getName());
-//                    calculateRewards(userId);
-//                }, customTaskExecutor)
-//                .exceptionally(ex -> {
-//                    log.error("Error in calculateRewardsAsync: {}", ex.getMessage(), ex);
-//                    return null;
-//                });
-//    }
+    public CompletableFuture<Void> calculateRewardsAsync(UUID userId) {
+
+        return CompletableFuture
+                .supplyAsync(() -> userApi.getUser(userId), customTaskExecutor)
+                .thenAcceptAsync(user -> {
+                    log.info("CalculateRewardsAsync for user: {} - Thread: {}",
+                            user.getUserName(), Thread.currentThread().getName());
+                    calculateRewards(userId);
+                }, customTaskExecutor)
+                .exceptionally(ex -> {
+                    log.error("Error in calculateRewardsAsync: {}", ex.getMessage(), ex);
+                    return null;
+                });
+
+    }
 }

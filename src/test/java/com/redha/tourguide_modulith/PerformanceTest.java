@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 import com.redha.tourguide_modulith.location.internal.LocationService;
@@ -18,7 +19,6 @@ import com.redha.tourguide_modulith.tracker.internal.TrackerService;
 import com.redha.tourguide_modulith.user.internal.UserService;
 import com.redha.tourguide_modulith.user.internal.model.User;
 import org.apache.commons.lang3.time.StopWatch;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,9 +78,15 @@ public class PerformanceTest {
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
 
+//        for (UserDto user : allUsers) {
+//            locationService.trackUserLocation(user.getUserId());
+//        }
+
+        List<CompletableFuture<VisitedLocationDto>> futuresVisitedLocations = new ArrayList<>();
         for (UserDto user : allUsers) {
-            locationService.trackUserLocation(user.getUserId());
+            futuresVisitedLocations.add(locationService.trackUserLocationAsync(user.getUserId()));
         }
+        CompletableFuture.allOf(futuresVisitedLocations.toArray(new CompletableFuture[0])).join();
 
         stopWatch.stop();
         trackerService.stopTracking();
@@ -90,7 +96,6 @@ public class PerformanceTest {
         assertTrue(TimeUnit.MINUTES.toSeconds(15) >= TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
     }
 
-    @Disabled
     @Test
     public void highVolumeGetRewards() {
 
@@ -108,7 +113,13 @@ public class PerformanceTest {
         List<User> allUsers = new ArrayList<>();
         allUsers = userService.getAllUsersInternal();
         allUsers.forEach(u -> u.addToVisitedLocations(new VisitedLocationDto(u.getUserId(), locationDto, new Date())));
-        allUsers.forEach(u -> rewardService.calculateRewards(u.getUserId()));
+
+//        allUsers.forEach(u -> rewardService.calculateRewards(u.getUserId()));
+
+        List<CompletableFuture<Void>> futuresUserRewards = new ArrayList<>();
+        allUsers.forEach(u -> futuresUserRewards.add(rewardService.calculateRewardsAsync(u.getUserId())));
+        CompletableFuture.allOf(futuresUserRewards.toArray(new CompletableFuture[0])).join();
+
         for (User user : allUsers) {
             assertFalse(user.getUserRewards().isEmpty());
         }

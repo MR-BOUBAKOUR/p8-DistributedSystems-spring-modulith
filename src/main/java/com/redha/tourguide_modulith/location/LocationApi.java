@@ -7,12 +7,15 @@ import com.redha.tourguide_modulith.shared.VisitedLocationDto;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 public interface LocationApi {
 
     VisitedLocationDto getUserLocation(UUID userId);
+    CompletableFuture<VisitedLocationDto> getUserLocationAsync(UUID userId);
 
     VisitedLocationDto trackUserLocation(UUID userId);
+    CompletableFuture<VisitedLocationDto> trackUserLocationAsync(UUID userId);
 
     List<AttractionDto> getAttractions();
 
@@ -21,4 +24,5 @@ public interface LocationApi {
     double getDistance(LocationDto loc1, LocationDto loc2);
 
     List<NearbyAttractionDTO> getNearbyAttractions(UUID userId);
+
 }

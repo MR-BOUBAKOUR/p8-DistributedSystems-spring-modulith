@@ -11,7 +11,6 @@ import com.redha.tourguide_modulith.shared.*;
 import com.redha.tourguide_modulith.location.internal.model.Attraction;
 import com.redha.tourguide_modulith.location.internal.model.VisitedLocation;
 import com.redha.tourguide_modulith.user.UserApi;
-import com.redha.tourguide_modulith.user.internal.model.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,13 +41,14 @@ public class LocationService implements LocationApi {
 
     }
 
-    /**
-     * Tracks the current location of the given user.
-     * ➤ Retrieves the user's location from the GPS adapter (external service).
-     * ➤ Publishes a TrackSuccessEvent to notify that the user's location has been successfully tracked.
-     *    This event is handled by UserService to persist the location
-     * ➤ The persistance will trigger VisitedLocationAddedEvent -> reward calculation.
-     */
+    public CompletableFuture<VisitedLocationDto> getUserLocationAsync(UUID userId) {
+        List<VisitedLocationDto> locations = userApi.getVisitedLocations(userId);
+
+        return locations.isEmpty()
+                ? trackUserLocationAsync(userId)
+                : CompletableFuture.completedFuture(locations.getLast());
+    }
+
     public VisitedLocationDto trackUserLocation(UUID userId) {
         VisitedLocation visitedLocation = gpsUtilAdapter.getUserLocation(userId);
         VisitedLocationDto visitedLocationDto = locationMapper.toDto(visitedLocation);
@@ -57,19 +57,20 @@ public class LocationService implements LocationApi {
         return visitedLocationDto;
     }
 
-    public CompletableFuture<VisitedLocationDto> getUserLocationAsync(UUID userId) {
-
-        return (userApi.getVisitedLocations(userId).isEmpty())
-                ? trackUserLocationAsync(userId)
-                : CompletableFuture.completedFuture(userApi.getLastVisitedLocation(userId));
-    }
-
+    /**
+     * Tracks the current location of the given user.
+     * ➤ Retrieves the user's location from the GPS adapter - external service.
+     * ➤ Publishes a UserLocationTrackedEvent to notify that the user's location has been successfully tracked.
+     *    This event is handled by UserService -> persist the new location of the user.
+     * ➤ The persistance will trigger VisitedLocationAddedEvent
+     *    This event is handled by RewardService -> calculate the reward
+     *    (if the new location is near an attraction - external service).
+     */
     public CompletableFuture<VisitedLocationDto> trackUserLocationAsync(UUID userId) {
-        User user = userApi.getUserInternal(userId);
+
         return CompletableFuture
                 .supplyAsync(() -> {
-                    log.info("TrackUserLocationAsync for user: {} - Thread: {}",
-                            user.getUserName(), Thread.currentThread().getName());
+                    log.info("TrackUserLocationAsync for user: {} - Thread: {}", userId, Thread.currentThread().getName());
                     VisitedLocation visitedLocation = gpsUtilAdapter.getUserLocation(userId);
                     return locationMapper.toDto(visitedLocation);
                 }, customTaskExecutor)
@@ -82,6 +83,7 @@ public class LocationService implements LocationApi {
                     log.error("Error in trackUserLocationAsync: {}", ex.getMessage(), ex);
                     return null;
                 });
+
     }
 
     public List<NearbyAttractionDTO> getNearbyAttractions(UUID userId) {

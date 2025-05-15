@@ -87,9 +87,9 @@ public class LocationService implements LocationApi {
     }
 
     public List<NearbyAttractionDTO> getNearbyAttractions(UUID userId) {
-        VisitedLocationDto visitedLocation = getUserLocation(userId);
-
         List<NearbyAttractionDTO> nearbyAttractions = new ArrayList<>();
+
+        VisitedLocationDto visitedLocation = getUserLocation(userId);
 
         List<AttractionDto> fiveNearbyAttractions = getAttractions().stream()
                 .sorted(Comparator.comparingDouble(attraction -> getDistance(attraction, visitedLocation.location)))
@@ -109,7 +109,6 @@ public class LocationService implements LocationApi {
                     visitedLocation.location.longitude,
                  0
             ));
-
         }
 
         return nearbyAttractions;

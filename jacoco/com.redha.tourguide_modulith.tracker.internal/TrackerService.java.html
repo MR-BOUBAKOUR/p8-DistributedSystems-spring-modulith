@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TrackerService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tourguide-modulith</a> &gt; <a href="index.source.html" class="el_package">com.redha.tourguide_modulith.tracker.internal</a> &gt; <span class="el_source">TrackerService.java</span></div><h1>TrackerService.java</h1><pre class="source lang-java linenums">package com.redha.tourguide_modulith.tracker.internal;
+
+import com.redha.tourguide_modulith.location.LocationApi;
+import com.redha.tourguide_modulith.tracker.TrackerApi;
+import com.redha.tourguide_modulith.user.UserApi;
+import com.redha.tourguide_modulith.user.UsersInitializedEvent;
+import com.redha.tourguide_modulith.shared.UserDto;
+import jakarta.annotation.PreDestroy;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.time.StopWatch;
+import org.springframework.context.event.EventListener;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+
+import static com.redha.tourguide_modulith.config.AppDefaultConst.TRACKING_POLLING_INTERVAL;
+
+<span class="fc" id="L21">@Slf4j</span>
+@Service
+public class TrackerService implements TrackerApi {
+
+<span class="fc" id="L25">    private final ExecutorService executorService = Executors.newSingleThreadExecutor();</span>
+    private final UserApi userApi;
+    private final LocationApi locationApi;
+
+<span class="fc" id="L29">    private boolean stop = false;</span>
+<span class="fc" id="L30">    private boolean isTrackingStarted = false;</span>
+
+<span class="fc" id="L32">    public TrackerService(UserApi userApi, LocationApi locationApi) {</span>
+<span class="fc" id="L33">        this.userApi = userApi;</span>
+<span class="fc" id="L34">        this.locationApi = locationApi;</span>
+<span class="fc" id="L35">    }</span>
+
+    @EventListener(UsersInitializedEvent.class)
+    public void startTracking() {
+<span class="pc bpc" id="L39" title="1 of 2 branches missed.">        if (!isTrackingStarted) {</span>
+<span class="fc" id="L40">            isTrackingStarted = true;</span>
+<span class="fc" id="L41">            executorService.submit(this::run);</span>
+        }
+<span class="fc" id="L43">    }</span>
+
+    @PreDestroy
+    public void stopTracking() {
+<span class="fc" id="L47">        log.info(&quot;Stopping tracker during application shutdown&quot;);</span>
+<span class="fc" id="L48">        stop = true;</span>
+<span class="fc" id="L49">        executorService.shutdownNow();</span>
+<span class="fc" id="L50">    }</span>
+
+    private void run() {
+<span class="fc" id="L53">        StopWatch stopWatch = new StopWatch();</span>
+
+        while (true) {
+<span class="pc bpc" id="L56" title="2 of 4 branches missed.">            if (Thread.currentThread().isInterrupted() || stop) {</span>
+<span class="nc" id="L57">                log.info(&quot;Tracker stopping&quot;);</span>
+<span class="nc" id="L58">                break;</span>
+            }
+
+<span class="fc" id="L61">            List&lt;UserDto&gt; users = userApi.getAllUsers();</span>
+
+<span class="fc" id="L63">            log.info(&quot;Begin Tracker. Tracking {} users.&quot;, users.size());</span>
+<span class="fc" id="L64">            stopWatch.start();</span>
+
+<span class="fc" id="L66">            users.forEach(user -&gt; locationApi.trackUserLocation(user.getUserId()));</span>
+
+//            List&lt;CompletableFuture&lt;VisitedLocation&gt;&gt; futures = new ArrayList&lt;&gt;();
+//            users.forEach(user -&gt; {
+//                CompletableFuture&lt;VisitedLocation&gt; future = locationService.trackUserLocationAsync(user);
+//                futures.add(future);
+//            });
+//            CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+
+
+<span class="fc" id="L76">            stopWatch.stop();</span>
+<span class="fc" id="L77">            log.info(&quot;Tracker Time Elapsed: {} seconds.&quot;, TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));</span>
+
+<span class="fc" id="L79">            stopWatch.reset();</span>
+            try {
+<span class="fc" id="L81">                log.info(&quot;Tracker sleeping&quot;);</span>
+<span class="fc" id="L82">                TimeUnit.SECONDS.sleep(TRACKING_POLLING_INTERVAL);</span>
+<span class="fc" id="L83">            } catch (InterruptedException e) {</span>
+<span class="fc" id="L84">                break;</span>
+<span class="fc" id="L85">            }</span>
+<span class="fc" id="L86">        }</span>
+<span class="fc" id="L87">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

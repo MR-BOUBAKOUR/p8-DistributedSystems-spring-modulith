@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RewardEventListener.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tourguide-modulith</a> &gt; <a href="index.source.html" class="el_package">com.redha.tourguide_modulith.reward.internal</a> &gt; <span class="el_source">RewardEventListener.java</span></div><h1>RewardEventListener.java</h1><pre class="source lang-java linenums">package com.redha.tourguide_modulith.reward.internal;
+
+import com.redha.tourguide_modulith.user.VisitedLocationAddedEvent;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.event.EventListener;
+import org.springframework.stereotype.Component;
+
+<span class="fc" id="L9">@Slf4j</span>
+@Component
+@RequiredArgsConstructor
+public class RewardEventListener {
+
+    private final RewardService rewardService;
+
+    /**
+     * Handles the VisitedLocationAddedEvent, triggered when a user visits a new location.
+     * ➤ Origin: Emitted by UserService.handleTrackSuccess after the persistence of the visited location
+     * ➤ Triggers reward calculation logic for the specified user.
+     * ➤ Delegates to calculateRewards(UUID) for processing.
+     */
+    @EventListener
+    public void handleVisitedLocationAdded(VisitedLocationAddedEvent event) {
+
+        // rewardService.calculateRewards(event.getUserId());
+<span class="fc" id="L26">        rewardService.calculateRewardsAsync(event.getUserId());</span>
+
+<span class="fc" id="L28">        log.debug(&quot;✅ TRACKING COMPLETED - Location data successfully processed for the user : {}&quot;, event.getUserId());</span>
+<span class="fc" id="L29">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StartupInitializer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tourguide-modulith</a> &gt; <a href="index.source.html" class="el_package">com.redha.tourguide_modulith.user.internal</a> &gt; <span class="el_source">StartupInitializer.java</span></div><h1>StartupInitializer.java</h1><pre class="source lang-java linenums">package com.redha.tourguide_modulith.user.internal;
+
+import com.redha.tourguide_modulith.shared.LocationDto;
+import com.redha.tourguide_modulith.shared.VisitedLocationDto;
+import com.redha.tourguide_modulith.user.UsersInitializedEvent;
+import com.redha.tourguide_modulith.user.internal.model.User;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.event.EventListener;
+import org.springframework.stereotype.Component;
+
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.*;
+import java.util.stream.IntStream;
+
+import static com.redha.tourguide_modulith.config.AppDefaultConst.INTERNAL_USER_NUMBER;
+import static com.redha.tourguide_modulith.config.AppDefaultConst.TEST_MODE;
+
+<span class="fc" id="L23">@Slf4j</span>
+@Component
+@RequiredArgsConstructor
+public class StartupInitializer {
+
+    private final ApplicationEventPublisher eventPublisher;
+
+    @EventListener(ApplicationReadyEvent.class)
+    public void init() {
+<span class="fc" id="L32">        Locale.setDefault(Locale.US);</span>
+
+        if (TEST_MODE) {
+<span class="fc" id="L35">            log.info(&quot;=== Test Mode ENABLED ===&quot;);</span>
+<span class="fc" id="L36">            log.info(&quot; &gt;&gt;&gt; Starting user initialization &lt;&lt;&lt; &quot;);</span>
+<span class="fc" id="L37">            initializeInternalUsers();</span>
+<span class="fc" id="L38">            log.info(&quot; &gt;&gt;&gt; User initialization COMPLETED &lt;&lt;&lt; &quot;);</span>
+
+<span class="fc" id="L40">            eventPublisher.publishEvent(new UsersInitializedEvent(this));</span>
+        }
+<span class="fc" id="L42">    }</span>
+
+    /**********************************************************************************
+     * Methods Below: For Internal Testing
+     **********************************************************************************/
+
+    private static final String tripPricerApiKey = &quot;test-server-api-key&quot;;
+    // Database connection will be used for external users, but for testing purposes
+    // internal users are provided and stored in memory
+    @Getter
+    private final Map&lt;UUID, User&gt; internalUserMap = new HashMap&lt;&gt;();
+
+    void initializeInternalUsers() {
+
+        // fixedUser for tests / HTTPs requests
+<span class="fc" id="L57">        UUID fixedUuid = UUID.fromString(&quot;11111111-1111-1111-1111-111111111111&quot;);</span>
+<span class="fc" id="L58">        String fixedUsername = &quot;internalUser0&quot;;</span>
+<span class="fc" id="L59">        String fixedPhone = &quot;000&quot;;</span>
+<span class="fc" id="L60">        String fixedEmail = fixedUsername + &quot;@tourGuide.com&quot;;</span>
+<span class="fc" id="L61">        User fixedUser = new User(fixedUuid, fixedUsername, fixedPhone, fixedEmail);</span>
+<span class="fc" id="L62">        generateUserLocationHistory(fixedUser);</span>
+<span class="fc" id="L63">        internalUserMap.put(fixedUser.getUserId(), fixedUser);</span>
+
+        // the rest of the users depending on (INTERNAL_USER_NUMBER - 1)
+<span class="fc" id="L66">        IntStream.range(1, INTERNAL_USER_NUMBER).forEach(i -&gt; {</span>
+<span class="fc" id="L67">            String dynamicUserName = &quot;internalUser&quot; + i;</span>
+<span class="fc" id="L68">            String dynamicEmail = dynamicUserName + &quot;@tourGuide.com&quot;;</span>
+<span class="fc" id="L69">            User user = new User(UUID.randomUUID(), dynamicUserName, &quot;000&quot;, dynamicEmail);</span>
+<span class="fc" id="L70">            generateUserLocationHistory(user);</span>
+<span class="fc" id="L71">            internalUserMap.put(user.getUserId(), user);</span>
+<span class="fc" id="L72">        });</span>
+<span class="fc" id="L73">        log.info(&quot;Created {} internal test users (1 fixed UUID, {} random).&quot;, INTERNAL_USER_NUMBER, INTERNAL_USER_NUMBER - 1);</span>
+<span class="fc" id="L74">    }</span>
+
+    private void generateUserLocationHistory(User user) {
+<span class="fc" id="L77">        IntStream.range(0, 3).forEach(i -&gt; {</span>
+<span class="fc" id="L78">            user.addToVisitedLocations(new VisitedLocationDto(</span>
+<span class="fc" id="L79">                    user.getUserId(),</span>
+<span class="fc" id="L80">                    new LocationDto(generateRandomLatitude(), generateRandomLongitude()),</span>
+<span class="fc" id="L81">                    getRandomTime()));</span>
+<span class="fc" id="L82">        });</span>
+<span class="fc" id="L83">    }</span>
+
+    private double generateRandomLongitude() {
+<span class="fc" id="L86">        double leftLimit = -180;</span>
+<span class="fc" id="L87">        double rightLimit = 180;</span>
+<span class="fc" id="L88">        return leftLimit + new Random().nextDouble() * (rightLimit - leftLimit);</span>
+    }
+
+    private double generateRandomLatitude() {
+<span class="fc" id="L92">        double leftLimit = -85.05112878;</span>
+<span class="fc" id="L93">        double rightLimit = 85.05112878;</span>
+<span class="fc" id="L94">        return leftLimit + new Random().nextDouble() * (rightLimit - leftLimit);</span>
+    }
+
+    private Date getRandomTime() {
+<span class="fc" id="L98">        LocalDateTime localDateTime = LocalDateTime.now().minusDays(new Random().nextInt(30));</span>
+<span class="fc" id="L99">        return Date.from(localDateTime.toInstant(ZoneOffset.UTC));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

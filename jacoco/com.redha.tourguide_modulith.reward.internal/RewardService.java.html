@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RewardService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tourguide-modulith</a> &gt; <a href="index.source.html" class="el_package">com.redha.tourguide_modulith.reward.internal</a> &gt; <span class="el_source">RewardService.java</span></div><h1>RewardService.java</h1><pre class="source lang-java linenums">package com.redha.tourguide_modulith.reward.internal;
+
+import com.redha.tourguide_modulith.location.LocationApi;
+import com.redha.tourguide_modulith.shared.AttractionDto;
+import com.redha.tourguide_modulith.shared.VisitedLocationDto;
+import com.redha.tourguide_modulith.reward.RewardApi;
+import com.redha.tourguide_modulith.user.UserApi;
+import com.redha.tourguide_modulith.shared.UserDto;
+import com.redha.tourguide_modulith.shared.UserRewardDto;
+import com.redha.tourguide_modulith.user.internal.model.User;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.task.TaskExecutor;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+
+<span class="fc" id="L21">@Slf4j</span>
+@AllArgsConstructor
+@Service
+public class RewardService implements RewardApi {
+
+    private final RewardCentralAdapter rewardCentralAdapter;
+    private final LocationApi locationApi;
+    private final UserApi userApi;
+    private final TaskExecutor customTaskExecutor;
+
+    public int getRewardPoints(UUID attractionId, UUID userId) {
+<span class="fc" id="L32">        return rewardCentralAdapter.getAttractionRewardPoints(</span>
+                attractionId, userId);
+    }
+
+    public void calculateRewards(UUID userId) {
+<span class="fc" id="L37">        UserDto user = userApi.getUser(userId);</span>
+
+<span class="fc" id="L39">        List&lt;VisitedLocationDto&gt; visitedLocations = new ArrayList&lt;&gt;(user.getVisitedLocations());</span>
+<span class="fc" id="L40">        List&lt;AttractionDto&gt; attractions = locationApi.getAttractions();</span>
+
+<span class="fc bfc" id="L42" title="All 2 branches covered.">        for(VisitedLocationDto visitedLocation : visitedLocations) {</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">            for(AttractionDto attraction : attractions) {</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">                if(locationApi.nearAttraction(visitedLocation, attraction)) {</span>
+<span class="fc" id="L45">                    userApi.addUserRewards(userId,</span>
+                            new UserRewardDto(
+                                    visitedLocation,
+                                    attraction,
+<span class="fc" id="L49">                                    getRewardPoints(attraction.getAttractionId(), user.getUserId()))</span>
+                    );
+
+<span class="fc" id="L52">                    log.debug(&quot;💎💎💎💎💎 REWARD GRANTED to the user {}&quot;, user.getUserId());</span>
+                }
+<span class="fc" id="L54">            }</span>
+<span class="fc" id="L55">        }</span>
+
+<span class="fc" id="L57">    }</span>
+
+    public CompletableFuture&lt;Void&gt; calculateRewardsAsync(UUID userId) {
+
+<span class="fc" id="L61">        return CompletableFuture</span>
+<span class="fc" id="L62">                .supplyAsync(() -&gt; userApi.getUser(userId), customTaskExecutor)</span>
+<span class="fc" id="L63">                .thenAcceptAsync(user -&gt; {</span>
+<span class="fc" id="L64">                    log.info(&quot;CalculateRewardsAsync for user: {} - Thread: {}&quot;,</span>
+<span class="fc" id="L65">                            user.getUserName(), Thread.currentThread().getName());</span>
+<span class="fc" id="L66">                    calculateRewards(userId);</span>
+<span class="fc" id="L67">                }, customTaskExecutor)</span>
+<span class="fc" id="L68">                .exceptionally(ex -&gt; {</span>
+<span class="nc" id="L69">                    log.error(&quot;Error in calculateRewardsAsync: {}&quot;, ex.getMessage(), ex);</span>
+<span class="nc" id="L70">                    return null;</span>
+                });
+
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

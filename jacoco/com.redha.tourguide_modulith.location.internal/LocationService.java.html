@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LocationService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">tourguide-modulith</a> &gt; <a href="index.source.html" class="el_package">com.redha.tourguide_modulith.location.internal</a> &gt; <span class="el_source">LocationService.java</span></div><h1>LocationService.java</h1><pre class="source lang-java linenums">package com.redha.tourguide_modulith.location.internal;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+
+import com.redha.tourguide_modulith.location.LocationApi;
+import com.redha.tourguide_modulith.shared.*;
+import com.redha.tourguide_modulith.location.internal.model.Attraction;
+import com.redha.tourguide_modulith.location.internal.model.VisitedLocation;
+import com.redha.tourguide_modulith.user.UserApi;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.core.task.TaskExecutor;
+import org.springframework.stereotype.Service;
+
+import static com.redha.tourguide_modulith.config.AppDefaultConst.DEFAULT_PROXIMITY_BUFFER;
+import static com.redha.tourguide_modulith.config.AppDefaultConst.STATUTE_MILES_PER_NAUTICAL_MILE;
+
+<span class="fc" id="L24">@Slf4j</span>
+@Service
+@RequiredArgsConstructor
+public class LocationService implements LocationApi {
+
+    private final GpsUtilAdapter gpsUtilAdapter;
+    @Getter
+    private final ApplicationEventPublisher publisher;
+    private final LocationMapper locationMapper;
+    private final UserApi userApi;
+    private final TaskExecutor customTaskExecutor;
+
+    public VisitedLocationDto getUserLocation(UUID userId) {
+
+<span class="fc bfc" id="L38" title="All 2 branches covered.">        return (userApi.getVisitedLocations(userId).isEmpty())</span>
+<span class="fc" id="L39">                ? trackUserLocation(userId)</span>
+<span class="fc" id="L40">                : userApi.getLastVisitedLocation(userId);</span>
+
+    }
+
+    public CompletableFuture&lt;VisitedLocationDto&gt; getUserLocationAsync(UUID userId) {
+<span class="nc" id="L45">        List&lt;VisitedLocationDto&gt; locations = userApi.getVisitedLocations(userId);</span>
+
+<span class="nc bnc" id="L47" title="All 2 branches missed.">        return locations.isEmpty()</span>
+<span class="nc" id="L48">                ? trackUserLocationAsync(userId)</span>
+<span class="nc" id="L49">                : CompletableFuture.completedFuture(locations.getLast());</span>
+    }
+
+    public VisitedLocationDto trackUserLocation(UUID userId) {
+<span class="fc" id="L53">        VisitedLocation visitedLocation = gpsUtilAdapter.getUserLocation(userId);</span>
+<span class="fc" id="L54">        VisitedLocationDto visitedLocationDto = locationMapper.toDto(visitedLocation);</span>
+<span class="fc" id="L55">        publisher.publishEvent(new UserLocationTrackedEvent(this, userId, visitedLocationDto));</span>
+
+<span class="fc" id="L57">        return visitedLocationDto;</span>
+    }
+
+    /**
+     * Tracks the current location of the given user.
+     * ➤ Retrieves the user's location from the GPS adapter - external service.
+     * ➤ Publishes a UserLocationTrackedEvent to notify that the user's location has been successfully tracked.
+     *    This event is handled by UserService -&gt; persist the new location of the user.
+     * ➤ The persistance will trigger VisitedLocationAddedEvent
+     *    This event is handled by RewardService -&gt; calculate the reward
+     *    (if the new location is near an attraction - external service).
+     */
+    public CompletableFuture&lt;VisitedLocationDto&gt; trackUserLocationAsync(UUID userId) {
+
+<span class="fc" id="L71">        return CompletableFuture</span>
+<span class="fc" id="L72">                .supplyAsync(() -&gt; {</span>
+<span class="fc" id="L73">                    log.info(&quot;TrackUserLocationAsync for user: {} - Thread: {}&quot;, userId, Thread.currentThread().getName());</span>
+<span class="fc" id="L74">                    VisitedLocation visitedLocation = gpsUtilAdapter.getUserLocation(userId);</span>
+<span class="fc" id="L75">                    return locationMapper.toDto(visitedLocation);</span>
+                }, customTaskExecutor)
+<span class="fc" id="L77">                .thenApply(visitedLocationDto -&gt; {</span>
+                    // user.addToVisitedLocations(visitedLocationDto);
+<span class="fc" id="L79">                    publisher.publishEvent(new UserLocationTrackedEvent(this, userId, visitedLocationDto));</span>
+<span class="fc" id="L80">                    return visitedLocationDto;</span>
+                })
+<span class="fc" id="L82">                .exceptionally(ex -&gt; {</span>
+<span class="nc" id="L83">                    log.error(&quot;Error in trackUserLocationAsync: {}&quot;, ex.getMessage(), ex);</span>
+<span class="nc" id="L84">                    return null;</span>
+                });
+
+    }
+
+    public List&lt;NearbyAttractionDTO&gt; getNearbyAttractions(UUID userId) {
+<span class="fc" id="L90">        List&lt;NearbyAttractionDTO&gt; nearbyAttractions = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L92">        VisitedLocationDto visitedLocation = getUserLocation(userId);</span>
+
+<span class="fc" id="L94">        List&lt;AttractionDto&gt; fiveNearbyAttractions = getAttractions().stream()</span>
+<span class="fc" id="L95">                .sorted(Comparator.comparingDouble(attraction -&gt; getDistance(attraction, visitedLocation.location)))</span>
+<span class="fc" id="L96">                .limit(5)</span>
+<span class="fc" id="L97">                .toList();</span>
+
+<span class="fc bfc" id="L99" title="All 2 branches covered.">        for (AttractionDto nearbyAttraction : fiveNearbyAttractions) {</span>
+<span class="fc" id="L100">            double distance = getDistance(nearbyAttraction, visitedLocation.location);</span>
+
+<span class="fc" id="L102">            nearbyAttractions.add(new NearbyAttractionDTO(</span>
+                    nearbyAttraction.attractionId,
+                    nearbyAttraction.attractionName,
+                    nearbyAttraction.latitude,
+                    nearbyAttraction.longitude,
+                    distance,
+                    visitedLocation.location.latitude,
+                    visitedLocation.location.longitude,
+                 0
+            ));
+<span class="fc" id="L112">        }</span>
+
+<span class="fc" id="L114">        return nearbyAttractions;</span>
+    }
+
+    public List&lt;AttractionDto&gt; getAttractions() {
+<span class="fc" id="L118">        List&lt;Attraction&gt; attractions = gpsUtilAdapter.getAttractions();</span>
+<span class="fc" id="L119">        return attractions.stream().map(locationMapper::toDto).toList();</span>
+    }
+
+    public List&lt;Attraction&gt; getAttractionsInternal() {
+<span class="fc" id="L123">        return gpsUtilAdapter.getAttractions();</span>
+    }
+
+    public boolean nearAttraction(VisitedLocationDto visitedLocation, AttractionDto attraction) {
+<span class="fc bfc" id="L127" title="All 2 branches covered.">        return !(getDistance(visitedLocation.location, attraction)</span>
+                &gt; DEFAULT_PROXIMITY_BUFFER);
+    }
+
+    public double getDistance(LocationDto loc1, LocationDto loc2) {
+<span class="fc" id="L132">        double lat1 = Math.toRadians(loc1.latitude);</span>
+<span class="fc" id="L133">        double lon1 = Math.toRadians(loc1.longitude);</span>
+<span class="fc" id="L134">        double lat2 = Math.toRadians(loc2.latitude);</span>
+<span class="fc" id="L135">        double lon2 = Math.toRadians(loc2.longitude);</span>
+
+<span class="fc" id="L137">        double angle = Math.acos(Math.sin(lat1) * Math.sin(lat2)</span>
+<span class="fc" id="L138">                + Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon1 - lon2));</span>
+
+<span class="fc" id="L140">        double nauticalMiles = 60 * Math.toDegrees(angle);</span>
+
+<span class="fc" id="L142">        return STATUTE_MILES_PER_NAUTICAL_MILE * nauticalMiles;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

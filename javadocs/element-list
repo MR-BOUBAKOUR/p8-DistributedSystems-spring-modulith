@@ -1,0 +1,17 @@
+com.redha.tourguide_modulith
+com.redha.tourguide_modulith.config
+com.redha.tourguide_modulith.gateway
+com.redha.tourguide_modulith.gateway.internal
+com.redha.tourguide_modulith.location
+com.redha.tourguide_modulith.location.internal
+com.redha.tourguide_modulith.location.internal.model
+com.redha.tourguide_modulith.reward
+com.redha.tourguide_modulith.reward.internal
+com.redha.tourguide_modulith.shared
+com.redha.tourguide_modulith.tracker
+com.redha.tourguide_modulith.tracker.internal
+com.redha.tourguide_modulith.trip
+com.redha.tourguide_modulith.trip.internal
+com.redha.tourguide_modulith.user
+com.redha.tourguide_modulith.user.internal
+com.redha.tourguide_modulith.user.internal.model

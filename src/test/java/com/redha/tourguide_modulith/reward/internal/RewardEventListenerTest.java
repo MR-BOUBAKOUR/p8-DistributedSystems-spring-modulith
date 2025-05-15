@@ -46,7 +46,8 @@ class RewardEventListenerTest {
         rewardEventListener.handleVisitedLocationAdded(event);
 
         // then
-        verify(rewardService, times(1)).calculateRewards(userId);
+//        verify(rewardService, times(1)).calculateRewards(userId);
+        verify(rewardService, times(1)).calculateRewardsAsync(userId);
 
     }
 }

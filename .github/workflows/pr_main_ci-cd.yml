@@ -27,15 +27,10 @@ jobs:
           mvn install:install-file -Dfile=./libs/TripPricer.jar -DgroupId=tripPricer -DartifactId=tripPricer -Dversion=1.0.0 -Dpackaging=jar
           mvn install:install-file -Dfile=./libs/RewardCentral.jar -DgroupId=rewardCentral -DartifactId=rewardCentral -Dversion=1.0.0 -Dpackaging=jar
 
-      - name: Install PlantUML & Graphviz
+      - name: Install Graphviz
         run: |
           sudo apt-get update
-          sudo apt-get install -y plantuml graphviz
-  
-          mkdir -p ~/.plantuml
-          git clone https://github.com/plantuml-stdlib/C4-PlantUML.git ~/.plantuml/C4-PlantUML
-    
-          echo 'includepath ~/.plantuml' > ~/.plantuml/config
+          sudo apt-get install -y graphviz
 
       ######################## BUILDS ########################
 
@@ -126,14 +121,15 @@ jobs:
 
       # Modulith - Components Diagram
 
-      - name: Generate Modulith Diagram PNG
+      - name: Generate Modulith Diagram PNG with Docker
         run: |
           if [ -f target/spring-modulith-docs/components.puml ]; then
             mkdir -p modulith-diagram
-            plantuml -tpng target/spring-modulith-docs/components.puml -o ../modulith-diagram
+            docker run --rm -v $(pwd):/workdir plantuml/plantuml -tpng /workdir/target/spring-modulith-docs/components.puml -o /workdir/modulith-diagram
           else
             echo "Warning: components.puml not found! Skipping diagram generation."
-            exit 1
+            mkdir -p modulith-diagram
+            echo "File not found" > modulith-diagram/components.png
           fi
 
       - name: Upload Modulith Diagram
@@ -142,7 +138,7 @@ jobs:
           name: modulith-diagram
           path: |
             target/spring-modulith-docs/components.puml
-            modulith-diagram/components.png
+            modulith-diagram/components.png 
 
       # GitHub Pages
 

@@ -27,6 +27,11 @@ jobs:
           mvn install:install-file -Dfile=./libs/TripPricer.jar -DgroupId=tripPricer -DartifactId=tripPricer -Dversion=1.0.0 -Dpackaging=jar
           mvn install:install-file -Dfile=./libs/RewardCentral.jar -DgroupId=rewardCentral -DartifactId=rewardCentral -Dversion=1.0.0 -Dpackaging=jar
 
+      - name: Install Graphviz
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y graphviz
+
       ######################## BUILDS ########################
 
       - name: Build, Test & Generate JaCoCo Coverage Report
@@ -114,6 +119,27 @@ jobs:
           name: javadocs
           path: target/reports/apidocs/
 
+      # Modulith - Components Diagram
+
+      - name: Generate Modulith Diagram PNG with Docker
+        run: |
+          if [ -f target/spring-modulith-docs/components.puml ]; then
+            mkdir -p modulith-diagram
+            docker run --rm -v $(pwd):/workdir plantuml/plantuml -tpng /workdir/target/spring-modulith-docs/components.puml -o /workdir/modulith-diagram
+          else
+            echo "Warning: components.puml not found! Skipping diagram generation."
+            mkdir -p modulith-diagram
+            echo "File not found" > modulith-diagram/components.png
+          fi
+
+      - name: Upload Modulith Diagram
+        uses: actions/upload-artifact@v4
+        with:
+          name: modulith-diagram
+          path: |
+            target/spring-modulith-docs/components.puml
+            modulith-diagram/components.png 
+
       # GitHub Pages
 
       - name: Prepare content GitHub Pages
@@ -121,6 +147,7 @@ jobs:
           mkdir -p gh-pages-build
           cp -r target/site/jacoco-ut gh-pages-build/jacoco
           cp -r target/reports/apidocs gh-pages-build/javadocs
+          cp modulith-diagram/components.png gh-pages-build/architecture-diagram.png
 
       - name: Deploy JavaDocs & JaCoCo to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4

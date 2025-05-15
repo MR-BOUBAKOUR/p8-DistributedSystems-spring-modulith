@@ -6,7 +6,7 @@ on:
     types: [closed]
 
 env:
-  DOCKER_REPO: ${{ secrets.DOCKERHUB_USERNAME }}/tourguide
+  DOCKER_REPO: ${{ secrets.DOCKERHUB_USERNAME }}/tourguide_modulith
 
 jobs:
   build-push-docker:

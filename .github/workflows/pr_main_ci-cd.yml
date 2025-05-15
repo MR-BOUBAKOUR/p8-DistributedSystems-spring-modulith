@@ -4,9 +4,6 @@ on:
   pull_request:
     branches: [main]
 
-env:
-  DOCKER_REPO: ${{ secrets.DOCKERHUB_USERNAME }}/tourguide
-
 jobs:
   build-test-artifacts:
     runs-on: ubuntu-latest
@@ -115,7 +112,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: javadocs
-          path: target/site/apidocs/
+          path: target/reports/apidocs/
 
       # GitHub Pages
 
@@ -123,7 +120,7 @@ jobs:
         run: |
           mkdir -p gh-pages-build
           cp -r target/site/jacoco-ut gh-pages-build/jacoco
-          cp -r target/site/apidocs gh-pages-build/javadocs
+          cp -r target/reports/apidocs gh-pages-build/javadocs
 
       - name: Deploy JavaDocs & JaCoCo to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4

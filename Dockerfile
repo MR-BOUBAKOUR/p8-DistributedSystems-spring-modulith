@@ -5,7 +5,7 @@
 # --------------------------------------------------------------
 # 🔨 BUILD STAGE (building the .jar)
 # --------------------------------------------------------------
-FROM eclipse-temurin:17-jdk AS build
+FROM eclipse-temurin:21-jdk AS build
 
 # Set working directory in the container for the build context
 WORKDIR /app
@@ -33,7 +33,7 @@ RUN mvn package -DskipTests
 # --------------------------------------------------------------
 # 🚀 RUNTIME STAGE (using the .jar -> creating the docker image)
 # --------------------------------------------------------------
-FROM eclipse-temurin:17-jre
+FROM eclipse-temurin:21-jre
 
 # Set the working directory for the application
 WORKDIR /app

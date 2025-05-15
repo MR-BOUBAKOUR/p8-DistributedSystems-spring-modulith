@@ -1,3 +1,24 @@
+# ⚙️ CI/CD Pipeline
+
+The project includes a fully operational **CI/CD pipeline** with the following features:
+
+
+- 📐 **Architecture Diagram** - [Spring Modulith Components View](https://mr-boubakour.github.io/p8-DistributedSystems-spring-modulith/architecture-diagram.png)
+
+
+- 🐳 **Docker Image Built** - [Dockerhub Repository](https://hub.docker.com/r/redikan7/tourguide_modulith/tags)
+
+
+- 📊 **Code Coverage Reports** - [JaCoCo Report](https://mr-boubakour.github.io/p8-DistributedSystems-spring-modulith/jacoco/)
+
+
+- 📚 **Documentation Generation** - [JavaDocs](https://mr-boubakour.github.io/p8-DistributedSystems-spring-modulith/javadocs/)
+
+
+- 🔒 **Security Scanning** - Trivy vulnerability scanning for the Docker image
+
+---
+
 # 📄 Project Overview
 
 **TourGuide** is a **Spring Boot** application that helps users plan their travels by discovering nearby tourist attractions and finding the best deals. By leveraging the user's current location, the app enables travelers to explore points of interest and earn rewards for visiting them.
@@ -20,35 +41,6 @@ To support high user volumes and ensure smooth user experience, TourGuide is des
 - **Event-Driven Architecture** ensures loose coupling between modules while enabling reactive, non-blocking workflows.
 
 These strategies allowed the application to pass performance simulations with **100,000 concurrent users**, ensuring scalability and system stability under load.
-
----
-
-# ⚙️ CI/CD Pipeline
-
-The project includes a fully operational **CI/CD pipeline** with the following features:
-
-
-- ✅ **Automated Testing**: Unit tests run on each push to dev
-
-
-- 📐 **Architecture Diagram**: Spring Modulith components view
-    - [Architecture Diagram](https://mr-boubakour.github.io/p8-DistributedSystems-spring-modulith/architecture-diagram.png)
-
-
-- 🐳 **Docker Image Built**
-    - [Docker Image Repository](https://hub.docker.com/r/redikan7/tourguide_modulith/tags)
-
-
-- 📊 **Code Coverage Reports**
-    - [JaCoCo Report](https://mr-boubakour.github.io/p8-DistributedSystems-spring-modulith/jacoco/)
-
-
-- 📚 **Documentation Generation**
-    - [JavaDocs](https://mr-boubakour.github.io/p8-DistributedSystems-spring-modulith/javadocs/)
-
-
-- 🔒 **Security Scanning**: 
-    - Trivy vulnerability scanning for the Docker image
 
 ---
 

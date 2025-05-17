@@ -32,6 +32,8 @@ TourGuide uses a **Modular Monolithic architecture** built with **Spring Modulit
 
 This combination allows the project to maintain simplicity in deployment while providing the advantages of modularity for long-term growth.
 
+![modulith_steps](img/modulith_steps.png)
+
 #### ⚡ Performance & Concurrency
 
 To support high user volumes and ensure smooth user experience, TourGuide is designed with concurrency and scalability in mind:
@@ -86,6 +88,10 @@ calls an external pricing library via an adapter to calculate trip offers
 Provides an API gateway that coordinates calls between modules without introducing circular dependencies, and includes a controller exposing the app's endpoints
 
 ---
+
+# 🚀 Application behavior on launch
+
+![p8_main](img/p8_main.png)
 
 # ⚙️ Dependencies
 

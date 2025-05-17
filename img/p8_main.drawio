@@ -1,49 +1,52 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Safari/537.36" version="26.2.14">
-  <diagram name="Page-1" id="8F4sLwUPQRPApXAcSAHt">
-    <mxGraphModel dx="1825" dy="1109" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#ffffff" math="0" shadow="0">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36" version="27.0.6">
+  <diagram name="Page-1" id="a2kMOcAD0hBkqyvMbRSp">
+    <mxGraphModel dx="2194" dy="1155" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#ffffff" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="wGNNHM_Z-EhmrwtbNBUC-8" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="wGNNHM_Z-EhmrwtbNBUC-19" target="wGNNHM_Z-EhmrwtbNBUC-20">
+        <mxCell id="FOI9n4g1t12No3UuwN8a-21" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="150" y="80" width="1110" height="890" as="geometry" />
+        </mxCell>
+        <mxCell id="FOI9n4g1t12No3UuwN8a-1" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="FOI9n4g1t12No3UuwN8a-11" target="FOI9n4g1t12No3UuwN8a-12">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="578" y="200" as="sourcePoint" />
             <mxPoint x="578" y="1080" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="wGNNHM_Z-EhmrwtbNBUC-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="wGNNHM_Z-EhmrwtbNBUC-9" target="wGNNHM_Z-EhmrwtbNBUC-34">
+        <mxCell id="FOI9n4g1t12No3UuwN8a-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="FOI9n4g1t12No3UuwN8a-3" target="FOI9n4g1t12No3UuwN8a-19">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="wGNNHM_Z-EhmrwtbNBUC-9" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Reward module&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
+        <mxCell id="FOI9n4g1t12No3UuwN8a-3" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Reward module&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
           <mxGeometry x="510" y="735" width="136" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="wGNNHM_Z-EhmrwtbNBUC-10" value="&lt;ul&gt;&lt;li&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;@EventListener(&lt;b&gt;ApplicationReadyEvent.class&lt;/b&gt;)&amp;nbsp;&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;Initializes a set of users&amp;nbsp;&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;Publishes &lt;b&gt;New UsersInitializedEvent&lt;/b&gt;&lt;/font&gt;&lt;/li&gt;&lt;/ul&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+        <mxCell id="FOI9n4g1t12No3UuwN8a-4" value="&lt;ul&gt;&lt;li&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;@EventListener(&lt;b&gt;ApplicationReadyEvent.class&lt;/b&gt;)&amp;nbsp;&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;Initializes a set of users&amp;nbsp;&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;Publishes &lt;b&gt;New UsersInitializedEvent&lt;/b&gt;&lt;/font&gt;&lt;/li&gt;&lt;/ul&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
           <mxGeometry x="820" y="255" width="406" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="wGNNHM_Z-EhmrwtbNBUC-35" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="wGNNHM_Z-EhmrwtbNBUC-15" target="wGNNHM_Z-EhmrwtbNBUC-31">
+        <mxCell id="FOI9n4g1t12No3UuwN8a-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="FOI9n4g1t12No3UuwN8a-6" target="FOI9n4g1t12No3UuwN8a-16">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="wGNNHM_Z-EhmrwtbNBUC-15" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Tracker module&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
+        <mxCell id="FOI9n4g1t12No3UuwN8a-6" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Tracker module&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
           <mxGeometry x="510" y="375" width="136" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="wGNNHM_Z-EhmrwtbNBUC-36" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="wGNNHM_Z-EhmrwtbNBUC-16" target="wGNNHM_Z-EhmrwtbNBUC-32">
+        <mxCell id="FOI9n4g1t12No3UuwN8a-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="FOI9n4g1t12No3UuwN8a-8" target="FOI9n4g1t12No3UuwN8a-17">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="wGNNHM_Z-EhmrwtbNBUC-16" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Location module&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
+        <mxCell id="FOI9n4g1t12No3UuwN8a-8" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;Location module&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
           <mxGeometry x="510" y="495" width="136" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="wGNNHM_Z-EhmrwtbNBUC-37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="wGNNHM_Z-EhmrwtbNBUC-17" target="wGNNHM_Z-EhmrwtbNBUC-33">
+        <mxCell id="FOI9n4g1t12No3UuwN8a-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="FOI9n4g1t12No3UuwN8a-10" target="FOI9n4g1t12No3UuwN8a-18">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="wGNNHM_Z-EhmrwtbNBUC-17" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;User module&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
+        <mxCell id="FOI9n4g1t12No3UuwN8a-10" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;User module&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
           <mxGeometry x="510" y="615" width="136" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="wGNNHM_Z-EhmrwtbNBUC-19" value="&lt;font style=&quot;font-size: 20px;&quot;&gt;Start&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;align=center;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+        <mxCell id="FOI9n4g1t12No3UuwN8a-11" value="&lt;font style=&quot;font-size: 20px;&quot;&gt;Start&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;align=center;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
           <mxGeometry x="510" y="110" width="136" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="wGNNHM_Z-EhmrwtbNBUC-20" value="&lt;font style=&quot;font-size: 20px;&quot;&gt;Done&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;align=center;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+        <mxCell id="FOI9n4g1t12No3UuwN8a-12" value="&lt;font style=&quot;font-size: 20px;&quot;&gt;Done&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;align=center;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
           <mxGeometry x="510" y="855" width="136" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="wGNNHM_Z-EhmrwtbNBUC-21" value="" style="endArrow=classic;html=1;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="wGNNHM_Z-EhmrwtbNBUC-20" target="wGNNHM_Z-EhmrwtbNBUC-15">
+        <mxCell id="FOI9n4g1t12No3UuwN8a-13" value="" style="endArrow=classic;html=1;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="FOI9n4g1t12No3UuwN8a-12" target="FOI9n4g1t12No3UuwN8a-6">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="800" y="215" as="sourcePoint" />
             <mxPoint x="800" y="1095" as="targetPoint" />
@@ -54,25 +57,25 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="wGNNHM_Z-EhmrwtbNBUC-28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="wGNNHM_Z-EhmrwtbNBUC-14" target="wGNNHM_Z-EhmrwtbNBUC-10">
+        <mxCell id="FOI9n4g1t12No3UuwN8a-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="FOI9n4g1t12No3UuwN8a-15" target="FOI9n4g1t12No3UuwN8a-4">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="wGNNHM_Z-EhmrwtbNBUC-14" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;User module&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
+        <mxCell id="FOI9n4g1t12No3UuwN8a-15" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;User module&lt;/font&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
           <mxGeometry x="510" y="255" width="136" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="wGNNHM_Z-EhmrwtbNBUC-31" value="&lt;ul&gt;&lt;li&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;@EventListener(&lt;b&gt;UsersInitializedEvent.Class&lt;/b&gt;)&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;For each user: Delegates to Location module to fetch current location&lt;/font&gt;&lt;/li&gt;&lt;/ul&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+        <mxCell id="FOI9n4g1t12No3UuwN8a-16" value="&lt;ul&gt;&lt;li&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;@EventListener(&lt;b&gt;UsersInitializedEvent.Class&lt;/b&gt;)&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font style=&quot;font-size: 14px;&quot;&gt;For each user: Delegates to Location module to fetch current location&lt;/font&gt;&lt;/li&gt;&lt;/ul&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
           <mxGeometry x="820" y="375" width="406" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="wGNNHM_Z-EhmrwtbNBUC-32" value="&lt;ul&gt;&lt;li&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Uses an &lt;b&gt;external library&lt;/b&gt; to determine the user&#39;s current location&amp;nbsp;&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Publishes &lt;b&gt;New&amp;nbsp;TrackSuccessEvent&lt;/b&gt;&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+        <mxCell id="FOI9n4g1t12No3UuwN8a-17" value="&lt;ul&gt;&lt;li&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Uses an &lt;b&gt;external library&lt;/b&gt; to determine the user&#39;s current location&amp;nbsp;&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Publishes &lt;b&gt;New&amp;nbsp;TrackSuccessEvent&lt;/b&gt;&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
           <mxGeometry x="820" y="495" width="406" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="wGNNHM_Z-EhmrwtbNBUC-33" value="&lt;ul&gt;&lt;li&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;@EventListener(&lt;b&gt;TrackSuccessEvent.Class&lt;/b&gt;)&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Add the VisitedLocation to the User&amp;nbsp;&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Publishes &lt;b&gt;New VisitedLocationAddedEven&lt;/b&gt;&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+        <mxCell id="FOI9n4g1t12No3UuwN8a-18" value="&lt;ul&gt;&lt;li&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;@EventListener(&lt;b&gt;TrackSuccessEvent.Class&lt;/b&gt;)&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Add the VisitedLocation to the User&amp;nbsp;&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Publishes &lt;b&gt;New VisitedLocationAddedEven&lt;/b&gt;&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
           <mxGeometry x="820" y="615" width="406" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="wGNNHM_Z-EhmrwtbNBUC-34" value="&lt;ul&gt;&lt;li&gt;&lt;span style=&quot;font-size: 14px; background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;@EventListener(&lt;b&gt;VisitedLocationAddedEvent.Class&lt;/b&gt;)&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;font-size: 14px; background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Calculate the rewards for the user&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;font-size: 14px; background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Delegates reward calculation to an &lt;b&gt;external library&lt;/b&gt;&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
+        <mxCell id="FOI9n4g1t12No3UuwN8a-19" value="&lt;ul&gt;&lt;li&gt;&lt;span style=&quot;font-size: 14px; background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;@EventListener(&lt;b&gt;VisitedLocationAddedEvent.Class&lt;/b&gt;)&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;font-size: 14px; background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Calculate the rewards for the user&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;font-size: 14px; background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Delegates reward calculation to an &lt;b&gt;external library&lt;/b&gt;&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;align=left;" vertex="1" parent="1">
           <mxGeometry x="820" y="735" width="406" height="90" as="geometry" />
         </mxCell>
-        <mxCell id="wGNNHM_Z-EhmrwtbNBUC-42" value="&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;The tracker runs continuously on a&amp;nbsp;&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;b&gt;separate thread&lt;/b&gt;.&amp;nbsp;&lt;br&gt;&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Based on the a &lt;b&gt;POLLING_INTERVAL&lt;/b&gt;, it triggers a new iteration.&amp;nbsp;&lt;/span&gt;&lt;br&gt;&lt;br&gt;&lt;div&gt;It will stop gracefully if the application is shut down.&lt;/div&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;align=center;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+        <mxCell id="FOI9n4g1t12No3UuwN8a-20" value="&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;The tracker runs continuously on a&amp;nbsp;&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;b&gt;separate thread&lt;/b&gt;.&amp;nbsp;&lt;br&gt;&lt;/span&gt;&lt;br&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;Based on the a &lt;b&gt;POLLING_INTERVAL&lt;/b&gt;, it triggers a new iteration.&amp;nbsp;&lt;/span&gt;&lt;br&gt;&lt;br&gt;&lt;div&gt;It will stop gracefully if the application is shut down.&lt;/div&gt;&lt;/div&gt;" style="whiteSpace=wrap;html=1;align=center;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
           <mxGeometry x="180" y="420" width="250" height="140" as="geometry" />
         </mxCell>
       </root>

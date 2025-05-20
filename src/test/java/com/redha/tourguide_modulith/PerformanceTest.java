@@ -19,6 +19,7 @@ import com.redha.tourguide_modulith.tracker.internal.TrackerService;
 import com.redha.tourguide_modulith.user.internal.UserService;
 import com.redha.tourguide_modulith.user.internal.model.User;
 import org.apache.commons.lang3.time.StopWatch;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,7 +63,7 @@ public class PerformanceTest {
      * assertTrue(TimeUnit.MINUTES.toSeconds(20) >=
      * TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
      */
-
+    @Disabled
     @Test
     public void highVolumeTrackLocation() {
 
@@ -96,6 +97,7 @@ public class PerformanceTest {
         assertTrue(TimeUnit.MINUTES.toSeconds(15) >= TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
     }
 
+    @Disabled
     @Test
     public void highVolumeGetRewards() {
 

@@ -57,15 +57,6 @@ public class LocationService implements LocationApi {
         return visitedLocationDto;
     }
 
-    /**
-     * Tracks the current location of the given user.
-     * ➤ Retrieves the user's location from the GPS adapter - external service.
-     * ➤ Publishes a UserLocationTrackedEvent to notify that the user's location has been successfully tracked.
-     *    This event is handled by UserService -> persist the new location of the user.
-     * ➤ The persistance will trigger VisitedLocationAddedEvent
-     *    This event is handled by RewardService -> calculate the reward
-     *    (if the new location is near an attraction - external service).
-     */
     public CompletableFuture<VisitedLocationDto> trackUserLocationAsync(UUID userId) {
 
         return CompletableFuture

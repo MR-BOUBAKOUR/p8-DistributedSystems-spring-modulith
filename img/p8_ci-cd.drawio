@@ -1,0 +1,58 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36" version="27.0.6">
+  <diagram name="Page-1" id="Z5-wqqpx3YM9XC0jiStY">
+    <mxGraphModel dx="2253" dy="751" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="z9et8fElZ09KmmzhWxfz-22" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-10" y="180" width="820" height="530" as="geometry" />
+        </mxCell>
+        <mxCell id="z9et8fElZ09KmmzhWxfz-3" value="&lt;ul&gt;&lt;li&gt;&lt;font style=&quot;color: rgb(26, 26, 26);&quot;&gt;Clone the repo, set up JDK 21, and install local JARs&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font&gt;&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;Build the project and &lt;/font&gt;&lt;b style=&quot;&quot;&gt;&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;run tests&lt;/font&gt;&lt;/b&gt;&lt;/font&gt;&lt;/li&gt;&lt;/ul&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;strokeColor=#999999;" vertex="1" parent="1">
+          <mxGeometry x="200" y="250" width="400" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="z9et8fElZ09KmmzhWxfz-4" value="" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;fillColor=#1ba1e2;strokeColor=#006EAF;" edge="1" parent="1" source="z9et8fElZ09KmmzhWxfz-15" target="z9et8fElZ09KmmzhWxfz-17">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="140" y="245" as="sourcePoint" />
+            <mxPoint x="610" y="245" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="z9et8fElZ09KmmzhWxfz-7" value="&lt;ul&gt;&lt;li&gt;&lt;font style=&quot;color: rgb(26, 26, 26);&quot;&gt;Clone the repo, set up JDK 21, and install local JARs&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font style=&quot;color: rgb(26, 26, 26);&quot;&gt;Build the project and run tests&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font style=&quot;color: rgb(26, 26, 26);&quot;&gt;Build Docker image and run Trivy security scan&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font&gt;&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;Generate the Jar file, JaCoCo report, Javadoc, Modulith diagram&amp;nbsp;then &lt;/font&gt;&lt;b style=&quot;&quot;&gt;&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;upload all the artifacts&lt;/font&gt;&lt;/b&gt;&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;b&gt;&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;Deploy to GitHub Pages&lt;/font&gt;&lt;/b&gt;&lt;/li&gt;&lt;/ul&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;strokeColor=#999999;" vertex="1" parent="1">
+          <mxGeometry x="200" y="400" width="400" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="z9et8fElZ09KmmzhWxfz-8" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fillColor=#1ba1e2;strokeColor=#006EAF;" edge="1" parent="1" source="z9et8fElZ09KmmzhWxfz-18" target="z9et8fElZ09KmmzhWxfz-19">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="140" y="405" as="sourcePoint" />
+            <mxPoint x="610" y="405" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="z9et8fElZ09KmmzhWxfz-11" value="&lt;ul&gt;&lt;li&gt;&lt;font style=&quot;color: rgb(26, 26, 26);&quot;&gt;Clone the repo, set up JDK 21, and install local JARs&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font style=&quot;color: rgb(26, 26, 26);&quot;&gt;Build the project JAR file&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font style=&quot;color: rgb(26, 26, 26);&quot;&gt;Set up Docker, login to DockerHub, and build the Docker image&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font&gt;&lt;b style=&quot;&quot;&gt;&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;Push the image to DockerHub&lt;/font&gt;&lt;/b&gt;&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt; with the latest tag&lt;/font&gt;&lt;/font&gt;&lt;/li&gt;&lt;/ul&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;strokeColor=#999999;" vertex="1" parent="1">
+          <mxGeometry x="200" y="600" width="400" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="z9et8fElZ09KmmzhWxfz-12" value="" style="endArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;fillColor=#1ba1e2;strokeColor=#006EAF;" edge="1" parent="1" source="z9et8fElZ09KmmzhWxfz-20" target="z9et8fElZ09KmmzhWxfz-21">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="140" y="625" as="sourcePoint" />
+            <mxPoint x="610" y="625" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="z9et8fElZ09KmmzhWxfz-15" value="&lt;font style=&quot;color: rgb(255, 255, 255); font-size: 14px;&quot;&gt;&lt;b&gt;EVERY PUSH&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1ba1e2;fontColor=#ffffff;strokeColor=#006EAF;" vertex="1" parent="1">
+          <mxGeometry x="40" y="210" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="z9et8fElZ09KmmzhWxfz-17" value="&lt;font style=&quot;color: rgb(255, 255, 255); font-size: 14px;&quot;&gt;&lt;b&gt;DEV BRANCH&lt;/b&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1ba1e2;fontColor=#ffffff;strokeColor=#006EAF;" vertex="1" parent="1">
+          <mxGeometry x="640" y="210" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="z9et8fElZ09KmmzhWxfz-18" value="&lt;b&gt;&lt;font style=&quot;color: rgb(255, 255, 255); font-size: 14px;&quot;&gt;PULL&lt;/font&gt;&lt;/b&gt;&lt;div&gt;&lt;b style=&quot;background-color: transparent;&quot;&gt;&lt;font style=&quot;color: rgb(255, 255, 255); font-size: 14px;&quot;&gt;REQUEST&lt;/font&gt;&lt;/b&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1ba1e2;fontColor=#ffffff;strokeColor=#006EAF;" vertex="1" parent="1">
+          <mxGeometry x="40" y="360" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="z9et8fElZ09KmmzhWxfz-19" value="&lt;b&gt;&lt;font style=&quot;color: rgb(255, 255, 255); font-size: 14px;&quot;&gt;DEV TO MAIN BRANCH&lt;/font&gt;&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1ba1e2;fontColor=#ffffff;strokeColor=#006EAF;" vertex="1" parent="1">
+          <mxGeometry x="640" y="360" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="z9et8fElZ09KmmzhWxfz-20" value="&lt;b&gt;&lt;font style=&quot;color: rgb(255, 255, 255); font-size: 14px;&quot;&gt;MERGE&lt;/font&gt;&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1ba1e2;fontColor=#ffffff;strokeColor=#006EAF;" vertex="1" parent="1">
+          <mxGeometry x="40" y="560" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="z9et8fElZ09KmmzhWxfz-21" value="&lt;b&gt;&lt;font style=&quot;color: rgb(255, 255, 255); font-size: 14px;&quot;&gt;DEV TO MAIN BRANCH&lt;/font&gt;&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1ba1e2;fontColor=#ffffff;strokeColor=#006EAF;" vertex="1" parent="1">
+          <mxGeometry x="640" y="560" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

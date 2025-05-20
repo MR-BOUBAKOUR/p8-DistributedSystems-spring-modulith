@@ -15,13 +15,17 @@ The project includes a fully operational **CI/CD pipeline** with the following f
 - 📚 **Documentation Generation** - [JavaDocs](https://mr-boubakour.github.io/p8-DistributedSystems-spring-modulith/javadocs/)
 
 
-- 🔒 **Security Scanning** - Trivy vulnerability scanning for the Docker image
+- 🔒 **Security Scanning** - Trivy vulnerability scanning for the Docker image of the app (Dependabot not used)
+
+![p8_ci-cd.png](img/p8_ci-cd.png)
 
 ---
 
 # 📄 Project Overview
 
 **TourGuide** is a **Spring Boot** application that helps users plan their travels by discovering nearby tourist attractions and finding the best deals. By leveraging the user's current location, the app enables travelers to explore points of interest and earn rewards for visiting them.
+
+![P8_graph_modullith](img/p8_graph_modullith.png)
 
 TourGuide uses a **Modular Monolithic architecture** built with **Spring Modulith**, which offers the following benefits:
 
@@ -32,7 +36,7 @@ TourGuide uses a **Modular Monolithic architecture** built with **Spring Modulit
 
 This combination allows the project to maintain simplicity in deployment while providing the advantages of modularity for long-term growth.
 
-![modulith_steps](img/modulith_steps.png)
+![p8_monolith_modulith_steps.png](img/p8_monolith_modulith_steps.png)
 
 #### ⚡ Performance & Concurrency
 
@@ -44,6 +48,12 @@ To support high user volumes and ensure smooth user experience, TourGuide is des
 
 These strategies allowed the application to pass performance simulations with **100,000 concurrent users**, ensuring scalability and system stability under load.
 
+
+##### Before (initially)
+![p8_sync.png](img/p8_sync.png)
+##### After (the final version)
+![p8_async.png](img/p8_async.png)
+
 ---
 
 # 🏛️ Architecture
@@ -52,7 +62,6 @@ These strategies allowed the application to pass performance simulations with **
 
 - **Modular Monolith Architecture**: Clear module boundaries with explicit dependencies
 - **Event-Driven Communication**: Modules communicate through events
-    - _e.g._: `VisitedLocationAddedEvent`, `UsersInitializedEvent`
 - **API Layers**: Each module exposes a well-defined API
 - **Internal Implementation**: Module internals are encapsulated and not directly accessible from other modules
 
@@ -91,7 +100,7 @@ Provides an API gateway that coordinates calls between modules without introduci
 
 # 🚀 Application behavior on launch
 
-![p8_main](img/p8_main.png)
+![P8_main](img/p8_main.png)
 
 # ⚙️ Dependencies
 

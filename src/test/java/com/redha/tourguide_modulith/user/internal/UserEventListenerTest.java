@@ -2,12 +2,11 @@ package com.redha.tourguide_modulith.user.internal;
 
 
 import com.redha.tourguide_modulith.shared.LocationDto;
-import com.redha.tourguide_modulith.shared.UserLocationTrackedEvent;
+import com.redha.tourguide_modulith.user.UserLocationTrackedEvent;
 import com.redha.tourguide_modulith.shared.VisitedLocationDto;
-import com.redha.tourguide_modulith.user.VisitedLocationAddedEvent;
+import com.redha.tourguide_modulith.user.UserVisitedLocationAddedEvent;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
@@ -60,6 +59,6 @@ class UserEventListenerTest {
 
         // then
         verify(userService, times(1)).addVisitedLocation(userId, visitedLocation);
-        verify(publisher, times(1)).publishEvent(any(VisitedLocationAddedEvent.class));
+        verify(publisher, times(1)).publishEvent(any(UserVisitedLocationAddedEvent.class));
     }
 }

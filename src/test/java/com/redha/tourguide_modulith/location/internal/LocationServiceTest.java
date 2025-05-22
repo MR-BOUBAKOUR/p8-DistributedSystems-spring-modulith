@@ -6,7 +6,7 @@ import com.redha.tourguide_modulith.location.internal.model.VisitedLocation;
 import com.redha.tourguide_modulith.shared.AttractionDto;
 import com.redha.tourguide_modulith.shared.LocationDto;
 import com.redha.tourguide_modulith.shared.NearbyAttractionDTO;
-import com.redha.tourguide_modulith.shared.UserLocationTrackedEvent;
+import com.redha.tourguide_modulith.user.UserLocationTrackedEvent;
 import com.redha.tourguide_modulith.shared.VisitedLocationDto;
 import com.redha.tourguide_modulith.user.UserApi;
 import lombok.RequiredArgsConstructor;

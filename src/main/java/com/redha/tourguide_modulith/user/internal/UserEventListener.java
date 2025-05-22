@@ -1,7 +1,7 @@
 package com.redha.tourguide_modulith.user.internal;
 
-import com.redha.tourguide_modulith.shared.UserLocationTrackedEvent;
-import com.redha.tourguide_modulith.user.VisitedLocationAddedEvent;
+import com.redha.tourguide_modulith.user.UserLocationTrackedEvent;
+import com.redha.tourguide_modulith.user.UserVisitedLocationAddedEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
@@ -27,7 +27,7 @@ public class UserEventListener {
 
         userService.addVisitedLocation(event.getUserId(), event.getVisitedLocation());
 
-        publisher.publishEvent(new VisitedLocationAddedEvent(this, event.getUserId(), event.getVisitedLocation()));
+        publisher.publishEvent(new UserVisitedLocationAddedEvent(this, event.getUserId(), event.getVisitedLocation()));
     }
 }
 

@@ -1,6 +1,6 @@
 package com.redha.tourguide_modulith.reward.internal;
 
-import com.redha.tourguide_modulith.user.VisitedLocationAddedEvent;
+import com.redha.tourguide_modulith.user.UserVisitedLocationAddedEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
@@ -20,7 +20,7 @@ public class RewardEventListener {
      * ➤ Delegates to calculateRewards(UUID) for processing.
      */
     @EventListener
-    public void handleVisitedLocationAdded(VisitedLocationAddedEvent event) {
+    public void handleVisitedLocationAdded(UserVisitedLocationAddedEvent event) {
 
         // rewardService.calculateRewards(event.getUserId());
         rewardService.calculateRewardsAsync(event.getUserId());

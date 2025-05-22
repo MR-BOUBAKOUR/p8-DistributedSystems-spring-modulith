@@ -2,7 +2,7 @@ package com.redha.tourguide_modulith.reward.internal;
 
 import com.redha.tourguide_modulith.shared.LocationDto;
 import com.redha.tourguide_modulith.shared.VisitedLocationDto;
-import com.redha.tourguide_modulith.user.VisitedLocationAddedEvent;
+import com.redha.tourguide_modulith.user.UserVisitedLocationAddedEvent;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -40,7 +40,7 @@ class RewardEventListenerTest {
         // given
         UUID userId = UUID.randomUUID();
         VisitedLocationDto visitedLocation = new VisitedLocationDto(userId, new LocationDto(48.8566, 2.3522), new Date());
-        VisitedLocationAddedEvent event = new VisitedLocationAddedEvent(this, userId, visitedLocation);
+        UserVisitedLocationAddedEvent event = new UserVisitedLocationAddedEvent(this, userId, visitedLocation);
 
         // when
         rewardEventListener.handleVisitedLocationAdded(event);

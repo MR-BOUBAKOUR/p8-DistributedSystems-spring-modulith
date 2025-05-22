@@ -7,6 +7,7 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 import com.redha.tourguide_modulith.location.LocationApi;
+import com.redha.tourguide_modulith.user.UserLocationTrackedEvent;
 import com.redha.tourguide_modulith.shared.*;
 import com.redha.tourguide_modulith.location.internal.model.Attraction;
 import com.redha.tourguide_modulith.location.internal.model.VisitedLocation;

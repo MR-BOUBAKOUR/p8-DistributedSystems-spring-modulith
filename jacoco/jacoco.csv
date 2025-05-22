@@ -6,7 +6,8 @@ tourguide-modulith,com.redha.tourguide_modulith.reward.internal,RewardCentralAda
 tourguide-modulith,com.redha.tourguide_modulith.reward.internal,RewardEventListener,0,16,0,0,0,4,0,2,0,2
 tourguide-modulith,com.redha.tourguide_modulith.gateway.internal,GatewayService,0,23,0,0,0,6,0,2,0,2
 tourguide-modulith,com.redha.tourguide_modulith.user,UsersInitializedEvent,0,4,0,0,0,2,0,1,0,1
-tourguide-modulith,com.redha.tourguide_modulith.user,VisitedLocationAddedEvent,0,10,0,0,0,4,0,1,0,1
+tourguide-modulith,com.redha.tourguide_modulith.user,UserLocationTrackedEvent,11,10,0,0,2,4,1,1,1,1
+tourguide-modulith,com.redha.tourguide_modulith.user,UserVisitedLocationAddedEvent,0,10,0,0,0,4,0,1,0,1
 tourguide-modulith,com.redha.tourguide_modulith.user.internal,UserService,28,69,2,0,6,16,3,10,2,10
 tourguide-modulith,com.redha.tourguide_modulith.user.internal,StartupInitializer,0,161,0,0,0,39,0,9,0,9
 tourguide-modulith,com.redha.tourguide_modulith.user.internal,UserEventListener,0,23,0,0,0,4,0,2,0,2

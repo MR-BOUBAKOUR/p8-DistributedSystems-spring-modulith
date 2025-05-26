@@ -25,6 +25,8 @@ The project includes a fully operational **CI/CD pipeline** with the following f
 
 **TourGuide** is a **Spring Boot** application that helps users plan their travels by discovering nearby tourist attractions and finding the best deals. By leveraging the user's current location, the app enables travelers to explore points of interest and earn rewards for visiting them.
 
+(I revisited my final implementation of the Project 8 from OpenClassrooms' Java Developer Path in order to redesign it as a modular monolith, leverage event-driven mechanisms, and explore domain-driven design principles)
+
 ![P8_graph_modullith](img/p8_graph_modullith.png)
 
 TourGuide uses a **Modular Monolithic architecture** built with **Spring Modulith**, which offers the following benefits:

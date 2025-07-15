@@ -19,32 +19,32 @@ public class GpsUtilAdapter {
 <span class="fc" id="L19">    }</span>
 
     public VisitedLocation getUserLocation(UUID userId) {
-<span class="fc" id="L22">        gpsUtil.location.VisitedLocation visitedLocation = gpsUtil.getUserLocation(userId);</span>
-<span class="fc" id="L23">        return convertVisitedLocation(visitedLocation);</span>
+<span class="nc" id="L22">        gpsUtil.location.VisitedLocation visitedLocation = gpsUtil.getUserLocation(userId);</span>
+<span class="nc" id="L23">        return convertVisitedLocation(visitedLocation);</span>
     }
 
     public List&lt;Attraction&gt; getAttractions() {
-<span class="fc" id="L27">        List&lt;gpsUtil.location.Attraction&gt; attractions = gpsUtil.getAttractions();</span>
-<span class="fc" id="L28">        return attractions.stream()</span>
-<span class="fc" id="L29">                .map(this::convertAttraction)</span>
-<span class="fc" id="L30">                .toList();</span>
+<span class="nc" id="L27">        List&lt;gpsUtil.location.Attraction&gt; attractions = gpsUtil.getAttractions();</span>
+<span class="nc" id="L28">        return attractions.stream()</span>
+<span class="nc" id="L29">                .map(this::convertAttraction)</span>
+<span class="nc" id="L30">                .toList();</span>
     }
 
     private VisitedLocation convertVisitedLocation(gpsUtil.location.VisitedLocation extVisitedLocation) {
 
-<span class="fc" id="L35">        Location internalLocation = new Location(</span>
+<span class="nc" id="L35">        Location internalLocation = new Location(</span>
                 extVisitedLocation.location.latitude,
                 extVisitedLocation.location.longitude);
 
-<span class="fc" id="L39">        return new VisitedLocation(</span>
+<span class="nc" id="L39">        return new VisitedLocation(</span>
                 extVisitedLocation.userId,
                 internalLocation,
-<span class="fc" id="L42">                new Date(extVisitedLocation.timeVisited.getTime())</span>
+<span class="nc" id="L42">                new Date(extVisitedLocation.timeVisited.getTime())</span>
         );
     }
 
     private Attraction convertAttraction(gpsUtil.location.Attraction extAttraction) {
-<span class="fc" id="L47">        return new Attraction(</span>
+<span class="nc" id="L47">        return new Attraction(</span>
                 extAttraction.attractionName,
                 extAttraction.city,
                 extAttraction.state,

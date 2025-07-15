@@ -58,14 +58,14 @@ public class RewardService implements RewardApi {
 
     public CompletableFuture&lt;Void&gt; calculateRewardsAsync(UUID userId) {
 
-<span class="fc" id="L61">        return CompletableFuture</span>
-<span class="fc" id="L62">                .supplyAsync(() -&gt; userApi.getUser(userId), customTaskExecutor)</span>
-<span class="fc" id="L63">                .thenAcceptAsync(user -&gt; {</span>
-<span class="fc" id="L64">                    log.info(&quot;CalculateRewardsAsync for user: {} - Thread: {}&quot;,</span>
-<span class="fc" id="L65">                            user.getUserName(), Thread.currentThread().getName());</span>
-<span class="fc" id="L66">                    calculateRewards(userId);</span>
-<span class="fc" id="L67">                }, customTaskExecutor)</span>
-<span class="fc" id="L68">                .exceptionally(ex -&gt; {</span>
+<span class="nc" id="L61">        return CompletableFuture</span>
+<span class="nc" id="L62">                .supplyAsync(() -&gt; userApi.getUser(userId), customTaskExecutor)</span>
+<span class="nc" id="L63">                .thenAcceptAsync(user -&gt; {</span>
+<span class="nc" id="L64">                    log.info(&quot;CalculateRewardsAsync for user: {} - Thread: {}&quot;,</span>
+<span class="nc" id="L65">                            user.getUserName(), Thread.currentThread().getName());</span>
+<span class="nc" id="L66">                    calculateRewards(userId);</span>
+<span class="nc" id="L67">                }, customTaskExecutor)</span>
+<span class="nc" id="L68">                .exceptionally(ex -&gt; {</span>
 <span class="nc" id="L69">                    log.error(&quot;Error in calculateRewardsAsync: {}&quot;, ex.getMessage(), ex);</span>
 <span class="nc" id="L70">                    return null;</span>
                 });
